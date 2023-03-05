@@ -25,26 +25,6 @@ router.get('/', (req, res) => {
         .then(menu => res.status(200).json(menu))
         .catch(error => res.status(404).json({ error }));
 });
-// get all category
-router.get('/category', (req, res) => {
-    Menu.find()
-        .then(menu => res.status(200).json(menu))
-        .catch(error => res.status(404).json({ error }));
-});
-
-// get all type
-router.get('/type', (req, res) => {
-    Menu.find()
-        .then(menu => res.status(200).json(menu))
-        .catch(error => res.status(404).json({ error }));
-});
-
-// get all allergens
-router.get('/allergens', (req, res) => {
-    Menu.find()
-        .then(menu => res.status(200).json(menu))
-        .catch(error => res.status(404).json({ error }));
-});
 
 
 module.exports = router;
