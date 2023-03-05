@@ -13,9 +13,6 @@ router.post('/', (req, res) => {
         price: req.body.price,
         description: req.body.description,
         image: req.body.image,
-        category: req.body.category,
-        type: req.body.type,
-        allergens: req.body.allergens,
     });
     menu.save()
         .then(() => res.status(201).json({ message: 'Menu created !' }))
