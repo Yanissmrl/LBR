@@ -3,9 +3,13 @@ const app = express();
 const userRouter = require('../request/userRouter');
 const newsRouter = require('../request/newsRouter');
 const horairesRouter = require('../request/horairesRouter');
+const menuRouter = require('../request/menuRouter');
+const platsRouter = require('../request/platsRouter');
 app.use('/users', userRouter);
 app.use('/news', newsRouter);
 app.use('/horaires', horairesRouter);
+app.use('/menu', menuRouter);
+app.use('/plats', platsRouter);
 // const router = require('./router');
 
 // app.use('/users', router);
