@@ -1,0 +1,35 @@
+.header
+    padding-top: 7rem
+    font-family: 'baloo 2', sans-serif
+    background-position: center
+    background-size: cover
+    &__allcontent
+        margin-top: 5rem
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        justify-items: end
+        &_left
+            &_content
+                background-color: $light-gray
+                width: 100%
+                border-radius: 10px
+                padding: 2rem
+                &_title
+                    font-size: 2rem
+                    font-weight: 700
+                &_txt
+                    font-size: 1.5rem
+                    font-weight: 500
+                    margin-top: 1rem
+                    line-height: 1.2
+            &_reseaux
+                margin-top: 2rem
+                display: flex
+                &_logo
+                    margin-right: 1rem
+                    max-height: 4rem
+        &_right
+            background-color: $gray
+            height: 30rem
+            width: 70%
+            border-radius: 5px

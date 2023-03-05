@@ -1,0 +1,42 @@
+.events
+    font-family: 'nunito', sans-serif
+    .grid
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        gap: 10%
+    &__title
+        font-family: 'baloo 2', sans-serif
+        font-weight: bold
+        font-size: 2.5em
+        margin-top: 5rem
+        margin-bottom: 2rem
+    &__card
+        background-color: $light-gray
+        border-radius: 10px
+        &_content
+            &_date
+                color: $gray
+                font-size: 0.8em
+                margin-top: 1rem
+                margin-left: 1rem
+            &_ctnt
+                margin: 2rem
+                margin-top: 1.5rem
+                &_title
+                    font-weight: bold
+                    font-size: 1.5em
+                &_image
+                    border-radius: 10px
+                    max-width: 100%
+                    margin: 1rem 0
+                &_txt
+                    line-height: 1.2
+                    text-align: center
+                &_linkdiv
+                    margin-top: 0.5rem
+                    width: 100%
+                    display: flex
+                    justify-content: flex-end
+                    &_link
+                        color: $red
+                        font-weight: bold
