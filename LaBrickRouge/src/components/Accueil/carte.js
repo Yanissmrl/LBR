@@ -5,7 +5,7 @@ export default function Carte() {
 
     return (
         <section className="carte">
-            <div className="container">
+            <div className="container"> 
                 <div className="carte__all">
                     <div className="carte__all_left">
                         <h2 className="carte__all_left_title">La carte</h2>
