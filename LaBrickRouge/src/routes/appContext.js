@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from '../App';
 import HeaderCarte from '../routes/Carte';
+import HeaderResa from '../routes/reservation';
 
 export const AppContext = createContext(null)
 
@@ -20,6 +21,10 @@ export function AppProvider() {
     {
       path: '/carte/:menu',
       element: <HeaderCarte />
+    },
+    {
+      path: '/reservation',
+      element: <HeaderResa />
     },
     
   ])

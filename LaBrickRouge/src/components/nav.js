@@ -11,7 +11,7 @@ export default function Nav() {
                     <ul className='nav-bg__nav_ul'>
                         <Link className='nav-bg__nav_ul_link' to='/'>Accueil</Link>
                         <Link className='nav-bg__nav_ul_link' to='/carte'>La carte</Link>
-                        <Link className='nav-bg__nav_ul_link' to='/'>Resta</Link>
+                        <Link className='nav-bg__nav_ul_link' to='/reservation'>Resta</Link>
                         <Link className='nav-bg__nav_ul_link' to='/'>Event</Link>
                     </ul>
                 </div>
