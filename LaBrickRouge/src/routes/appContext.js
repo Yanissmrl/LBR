@@ -17,6 +17,10 @@ export function AppProvider() {
       path: '/carte',
       element: <HeaderCarte />
     },
+    {
+      path: '/carte/:menu',
+      element: <HeaderCarte />
+    },
     
   ])
 
