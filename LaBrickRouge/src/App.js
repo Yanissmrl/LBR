@@ -4,6 +4,7 @@ import Carte from "./components/Accueil/carte";
 import Presentation from "./components/Accueil/presentation";
 import Nav from "./components/nav";
 import Footer from "./components/footer";
+
 function App() {
   return (
     <div className="App">

@@ -19,11 +19,11 @@ router.post('/', (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
-// // get user by email
-// router.get('/:email', (req, res) => {
-//     User.findOne({ email: req.params.email })
-//         .then(user => res.status(200).json(user))
-//         .catch(error => res.status(404).json({ error }));
-// });
+// get user by name
+router.get('/:name', (req, res) => {
+    User.findOne({ name: req.params.name })
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(404).json({ error }));
+});
 
 module.exports = router;
