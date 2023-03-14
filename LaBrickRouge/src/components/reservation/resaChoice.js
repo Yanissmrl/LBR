@@ -4,17 +4,24 @@ import { APIContext } from "../../api/APIcall";
 
 export default function ResaChoice() {
 
-    
+
     const apiContext = useContext(APIContext);
     let { reservation } = useParams();
     const [data, setData] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
 
+    const closePopup = () => {
+        setShowPopup(false);
+        document.getElementById('dive').classList.remove("bg-opacity")
+    };
+
 
     const handleClick = (day, hour) => {
+
         setShowPopup(true);
         setNom('')
         setEmail('')
+        document.getElementById('dive').classList.add("bg-opacity")
     };;
 
     const nameRef = useRef();
@@ -26,6 +33,7 @@ export default function ResaChoice() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowPopup(false);
+        document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
         setNom(dataName)
@@ -55,6 +63,8 @@ export default function ResaChoice() {
     if (!reservation) {
         return (
             <>
+
+                <div onClick={() => { closePopup() }} id="dive" className=""></div>
                 <div className="resaChoice">
                     {
                         data.map((element) => {
@@ -104,6 +114,7 @@ export default function ResaChoice() {
 
                     <div className="popup">
                         <form onSubmit={handleSubmit} className="popup__form" action="submit">
+                            <button onClick={() => { closePopup() }} >X</button>
                             <h2 id="resaChoice" className="popup__form_title">Veuillez choisir la reservation</h2>
                             <div className="popup__form_inputs">
                                 <div id="resaChoice">

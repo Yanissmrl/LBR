@@ -6,6 +6,7 @@ export default function pageContent() {
 
     return (
         <section className='reservation'>
+
             <div className="container">
                 <h1 className="title">Reservations</h1>
                 <div className="reservation__content">

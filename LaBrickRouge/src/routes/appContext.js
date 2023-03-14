@@ -23,6 +23,10 @@ export function AppProvider() {
       element: <HeaderCarte />
     },
     {
+      path: '/carte/:menu',
+      element: <HeaderCarte />
+    },
+    {
       path: '/reservation',
       element: <Reservation />
     },
