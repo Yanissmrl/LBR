@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { APIContext } from "../../api/APIcall";
 
 export default function ResaChoice() {
+
+    
     const apiContext = useContext(APIContext);
     let { reservation } = useParams();
     const [data, setData] = useState([]);
