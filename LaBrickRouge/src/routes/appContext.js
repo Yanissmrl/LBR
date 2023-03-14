@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from '../App';
 import HeaderCarte from '../routes/Carte';
-import HeaderResa from '../routes/reservation';
+import Reservation from '../routes/reservation';
 
 export const AppContext = createContext(null)
 
@@ -11,8 +11,8 @@ export function AppProvider() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element:  <App />
-      
+      element: <App />
+
     },
     {
       path: '/carte',
@@ -24,9 +24,9 @@ export function AppProvider() {
     },
     {
       path: '/reservation',
-      element: <HeaderResa />
+      element: <Reservation />
     },
-    
+
   ])
 
   return (

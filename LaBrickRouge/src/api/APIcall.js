@@ -8,6 +8,8 @@ export default function APIProvider(props) {
         <APIContext.Provider
             value={{
                 getMenus: API.getMenus,
+                getHoraires: API.getHoraires,
+                postReservation: API.postReservation,
             }}>
             {props.children}
         </APIContext.Provider>
@@ -28,8 +30,27 @@ const API = {
         }
         const response = await fetch(`${baseUrl}/menu`, header)
         const data = await response.json()
-        console.log("data api call all :", data);
         return data
     },
-    
+
+    getHoraires: async () => {
+        let header = {
+            method: 'GET',
+        }
+        const response = await fetch(`${baseUrl}/horaires`, header)
+        const data = await response.json()
+        return data
+    },
+
+
+    postReservation: async (data) => {
+
+        await fetch(`${baseUrl}/resaClient`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+    }
 }
