@@ -19,4 +19,12 @@ router.post('/', (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
+// GET all horaires
+
+router.get('/', (req, res) => {
+    Horaires.find()
+        .then(horaires => res.status(200).json(horaires))
+        .catch(error => res.status(404).json({ error }));
+});
+
 module.exports = router;

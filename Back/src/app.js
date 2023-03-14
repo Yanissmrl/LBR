@@ -5,17 +5,18 @@ const newsRouter = require('../request/newsRouter');
 const horairesRouter = require('../request/horairesRouter');
 const menuRouter = require('../request/menuRouter');
 const platsRouter = require('../request/platsRouter');
+const resaAdminRouter = require('../request/reservationAdminRouter');
+const resaClientRouter = require('../request/reservationClientRouter');
 app.use('/users', userRouter);
 app.use('/news', newsRouter);
 app.use('/horaires', horairesRouter);
 app.use('/menu', menuRouter);
 app.use('/plats', platsRouter);
-// const router = require('./router');
-
-// app.use('/users', router);
+app.use('/resaAdmin', resaAdminRouter);
+app.use('/resaClient', resaClientRouter);
 
 app.get('/', (req, res) => {
-  res.status(200).send('Wecome to Todo List API !');
+  res.status(200).send('Wecome to LaBrickRouge API');
 });
 
 module.exports = app;

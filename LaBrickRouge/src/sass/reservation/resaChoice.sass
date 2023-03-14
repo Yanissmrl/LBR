@@ -1,0 +1,44 @@
+.resaChoice
+    width: 60%
+    display: grid
+    grid-template-columns: repeat(3,1fr)
+    column-gap: 5px
+    row-gap: 10px
+    &__all
+        display: flex
+        border: 2px solid $gray
+        flex-direction: column
+        border-radius: 3px
+        &_titleDiv
+            border-bottom: 2px solid $light-gray
+            &_title
+                margin-top: 5px
+                font-family: "baloo 2", sans-serif
+                text-align: center
+                font-size: 1.5rem
+                font-weight: 500
+                &:first-letter
+                    text-transform: uppercase
+        &_content
+            font-family: "nunito", sans-serif
+            .underlineDiv
+                display: flex
+                justify-content: center
+                margin: 0.5rem 0
+                &__underline
+                    width: 80%
+                    border: 1px solid $red
+            &_text
+                padding: 0.5rem
+                &_title
+                    font-size: 1.2rem
+                    width: 100%
+                    margin-bottom: 5px
+                &_txt
+                    display: grid
+                    grid-template-columns: repeat(2,1fr)
+                    &_p
+                        margin: 2px 1rem
+                        &:hover
+                            border-radius: 3px
+                            background-color: $red

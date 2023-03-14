@@ -1,16 +1,16 @@
-import HeaderResa from "../components/reservation/header";
+import PageContent from "../components/reservation/pageContent";
 import Nav from "../components/nav";
 import APIProvider from "../api/APIcall";
 import Footer from "../components/footer";
-export default function Carte() {
+export default function Reservation() {
 
     return (
         <APIProvider>
-            <div>
+            <section className="page">
                 <Nav></Nav>
-                <HeaderResa></HeaderResa>
+                <PageContent></PageContent>
                 <Footer></Footer>
-            </div>
+            </section>
         </APIProvider>
     )
 }
