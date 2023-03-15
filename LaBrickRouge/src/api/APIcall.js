@@ -49,7 +49,6 @@ const API = {
         }
         const response = await fetch(`${baseUrl}/user`, header)
         const data = await response.json()
-        console.log("data :", data);
         return data
     },
 

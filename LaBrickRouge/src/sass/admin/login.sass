@@ -1,0 +1,60 @@
+.loginPage
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100vh
+.login
+    font-family: 'nunito', sans-serif
+    &__title
+        font-size: 2rem
+        font-weight: 700
+        margin-bottom: 1rem
+    &__form
+        &_parentLabel
+            position: relative
+            .divPosition
+                display: flex
+                align-items: center
+            &_input
+                margin: 1rem 0
+                outline: none
+                border: none
+                border-bottom: 1px solid $gray
+                background: transparent
+            &_input:focus
+                border-bottom: 1px solid $red
+            &_input:focus ~ label
+                bottom: 2.3rem
+                color: $red
+                transform: scale(1)
+                transform-origin: left
+            &_label
+                position: absolute
+                bottom: 20px
+                left: 0
+                transition-property: all
+                transition-duration: .2s
+                pointer-events: none
+            &_eye
+                &_image
+                    height: 1rem
+        &_err
+            color: $red
+            font-size: 0.8rem
+            width: 13rem
+        &_button
+            margin: 1rem 0
+            padding: 0.5rem 1rem
+            border: none
+            border-radius: 5px
+            background: black
+            color: white
+            font-size: 1rem
+            font-weight: 700
+            cursor: pointer
+            transition: all .2s
+            &:hover
+                background: $red
+                transform: scale(1.05)
+            &:active
+                transform: scale(1)
