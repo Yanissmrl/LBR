@@ -4,11 +4,14 @@ import './sass/styles.sass'
 import './reset.css'
 import reportWebVitals from './reportWebVitals';
 import { AppProvider } from './routes/appContext';
+import APIProvider from "./api/APIcall";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppProvider />
+    <APIProvider>
+      <AppProvider />
+    </APIProvider>
   </React.StrictMode>
 );
 

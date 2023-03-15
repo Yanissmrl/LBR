@@ -10,6 +10,7 @@ export default function APIProvider(props) {
                 getMenus: API.getMenus,
                 getHoraires: API.getHoraires,
                 postReservation: API.postReservation,
+                getUser: API.getUser,
             }}>
             {props.children}
         </APIContext.Provider>
@@ -39,6 +40,16 @@ const API = {
         }
         const response = await fetch(`${baseUrl}/horaires`, header)
         const data = await response.json()
+        return data
+    },
+
+    getUser: async () => {
+        let header = {
+            method: 'GET',
+        }
+        const response = await fetch(`${baseUrl}/user`, header)
+        const data = await response.json()
+        console.log("data :", data);
         return data
     },
 

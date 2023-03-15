@@ -7,7 +7,7 @@ const menuRouter = require('../request/menuRouter');
 const platsRouter = require('../request/platsRouter');
 const resaAdminRouter = require('../request/reservationAdminRouter');
 const resaClientRouter = require('../request/reservationClientRouter');
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/news', newsRouter);
 app.use('/horaires', horairesRouter);
 app.use('/menu', menuRouter);
