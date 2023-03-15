@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { APIContext } from "../../api/APIcall";
 import { Link } from "react-router-dom";
 import table from '../../assets/table.svg';
-import couverts from '../../assets/couverts.svg';;
+import couverts from '../../assets/couverts.svg';
 
 
 export default function HeaderCarte() {

@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { APIContext } from "../../api/APIcall";
+import croix from '../../assets/croix.svg';
+import plus from '../../assets/Plus.svg';
+import moins from '../../assets/Moins.svg';
 
 export default function ResaChoice() {
-
 
     const apiContext = useContext(APIContext);
     let { reservation } = useParams();
@@ -17,18 +19,22 @@ export default function ResaChoice() {
 
 
     const handleClick = (day, hour) => {
-
+        setDay(day)
+        setHour(hour)
         setShowPopup(true);
         setNom('')
         setEmail('')
         document.getElementById('dive').classList.add("bg-opacity")
     };;
 
+    const [places, setPlaces] = useState(0);
+
     const nameRef = useRef();
     const emailRef = useRef();
     const [nom, setNom] = useState('');
     const [email, setEmail] = useState('');
-
+    const [day, setDay] = useState('');
+    const [hour, setHour] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -113,19 +119,58 @@ export default function ResaChoice() {
                 {showPopup && (
 
                     <div className="popup">
+                        <div className="popup__closeButton" onClick={() => { closePopup() }} ><img className="popup__closeButton_image" src={croix} alt="close" /></div>
+
+                        <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{day}</span> à <span className="span">{hour}</span></h2>
+
                         <form onSubmit={handleSubmit} className="popup__form" action="submit">
-                            <button onClick={() => { closePopup() }} >X</button>
-                            <h2 id="resaChoice" className="popup__form_title">Veuillez choisir la reservation</h2>
+
                             <div className="popup__form_inputs">
-                                <div id="resaChoice">
+                                <div className="parentLabel">
+                                    <input required ref={nameRef} className="popup__form_inputs_input" type="text" />
+                                    <label className="label">Nom</label>
 
                                 </div>
-                                <input required ref={nameRef} placeholder="Nom" className="popup__form_inputs_input" type="text" />
-                                <input required ref={emailRef} placeholder="Email" className="popup__form_inputs_input" type="text" />
-                                <p>{nom + " " + email}</p>
+                                <div className="parentLabel">
+                                    <input required ref={emailRef} className="popup__form_inputs_input" type="email" />
+                                    <label className="label">Email</label>
+                                </div>
                             </div>
-                            <p className="popup__form_txt">nombre de personnes ?</p>
-                            <button className="popup__form_button" type="submit" >Envoyer</button>
+
+                            <p className="popup__form_places">Nous avons <span className="span">20 places</span> disponibles, veuillez choisir le nombre de places qu'il vous faut !</p>
+
+                            <div className="popup__form_placesChoice">
+
+                                <p className="popup__form_placesChoice_title">Nombre de places ?</p>
+
+                                <div className="popup__form_placesChoice_selector">
+                                    {/* button avec le nombre de personnes */}
+
+                                    <div onClick={() => {
+                                        setPlaces(places - 1);
+                                        console.log(places);
+                                    }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={moins} alt="moins" /></div>
+                                    <p className="popup__form_placesChoice_selector_value">{places}</p>
+                                    <div onClick={() => {
+                                        setPlaces(places + 1);
+                                        console.log(places);
+                                    }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={plus} alt="plus" /></div>
+                                </div>
+                            </div>
+
+                            <div className="popup__form_submitButton">
+
+                                <div className="popup__form_submitButton_arrow">
+                                    <div className="popup__form_submitButton_arrow_line">
+                                        {/* trait */}
+                                    </div>
+                                    <div className="popup__form_submitButton_arrow_edge">
+                                        {/* carré pour faire la flèche */}
+                                    </div>
+                                </div>
+
+                                <button className="popup__form_submitButton_button" type="submit" >Envoyer</button>
+                            </div>
                         </form>
                     </div>
                 )}
