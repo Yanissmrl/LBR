@@ -11,21 +11,23 @@ export default function Login() {
     const userData = useRef(null);
 
     let { user } = useParams();
-    const [currentdata, setData] = useState([]);
+    const [currentData, setData] = useState([]);
 
     useEffect(() => {
-        apiContext.getUser().then(data =>{
-        if (data[0])  {
-            setData(data[0].loginId)
-            userData.current = data[0].loginId;
-            console.log("data[0].loginId :", userData.current);
-        }});
+        apiContext.getUser().then(data => {
+            if (data[0].loginId) {
+                userData.current = data[0].loginId;
+                console.log("data[0].loginId :", userData.current);
+
+                setData(userData.current)
+            }
+        });
     }, [user, apiContext])
 
     if (!user) {
         return (
             <section className="">
-                <h1>Login {userData.current ? (userData.current) : '' }</h1>
+                <h1>Login {currentData ? (currentData) : ''}</h1>
                 <form onSubmit={e => {
                     e.preventDefault();
                     appContext.setUser({
