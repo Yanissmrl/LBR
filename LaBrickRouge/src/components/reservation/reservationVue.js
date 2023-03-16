@@ -1,4 +1,4 @@
-import Popup from "./popup";
+
 
 
 
@@ -34,7 +34,6 @@ export default function ResaVue() {
                 </div>
             </div>
 
-            <Popup />
         </div>
     )
 }

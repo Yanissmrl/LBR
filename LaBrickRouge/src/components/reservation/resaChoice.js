@@ -42,8 +42,6 @@ export default function ResaChoice() {
         document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
-        setNom(dataName)
-        setEmail(dataEmail)
 
         apiContext.postReservation({
             day: "lundi",
@@ -119,7 +117,7 @@ export default function ResaChoice() {
                 {showPopup && (
 
                     <div className="popup">
-                        <div className="popup__closeButton" onClick={() => { closePopup() }} ><img className="popup__closeButton_image" src={croix} alt="close" /></div>
+                        <div className="popup__closeButton" ><img onClick={() => { closePopup() }} className="popup__closeButton_image" src={croix} alt="close" /></div>
 
                         <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{day}</span> à <span className="span">{hour}</span></h2>
 

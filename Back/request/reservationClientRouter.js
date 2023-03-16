@@ -21,4 +21,11 @@ router.post('/', (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
+// get all reservationClient
+router.get('/', (req, res) => {
+    ResaClient.find()
+        .then(resaClient => res.status(200).json(resaClient))
+        .catch(error => res.status(404).json({ error }));
+});
+
 module.exports = router;

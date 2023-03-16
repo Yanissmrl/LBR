@@ -14,7 +14,6 @@ export default function HeaderCarte() {
     useEffect(() => {
 
         apiContext.getMenus().then(data => setData(data));
-        console.log("tt les menus :", menu);
 
     }, [menu, apiContext])
 

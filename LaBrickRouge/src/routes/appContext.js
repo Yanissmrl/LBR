@@ -5,12 +5,13 @@ import App from '../App';
 import HeaderCarte from '../routes/Carte';
 import Reservation from '../routes/reservation';
 import AdminAccueil from '../routes/adminAccueil';
+import Horaires from '../routes/adminAccueil';
 import Login from '../routes/Login';
 
 export const AppContext = createContext(null)
 
 export function AppProvider() {
-  const [user, setUser] = useState({ loggedIn: false })
+  const [user, setUser] = useState({ loggedIn: true })
 
   const router = createBrowserRouter([
     {
@@ -34,6 +35,11 @@ export function AppProvider() {
     {
       path: '/admin',
       element: user.loggedIn ? (<AdminAccueil />) : (<Login />)
+
+    },
+    {
+      path: '/admin/reservation',
+      element: user.loggedIn ? (<Horaires />) : (<Login />)
 
     },
 

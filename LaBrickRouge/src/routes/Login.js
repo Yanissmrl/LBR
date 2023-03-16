@@ -70,7 +70,7 @@ export default function Login() {
                         </div>
 
                         <p className="login__form_err">{erreur}</p>
-                        <button className="login__form_button" type="submit">Connexion</button>
+                        <button className="login__form_button" type="submit">Se connecter</button>
 
                     </form>
                 </div>
