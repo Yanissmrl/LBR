@@ -10,6 +10,7 @@ const platsSchema = mongoose.Schema({
     type: String,
     // type viande, poisson, végétarien
     allergens: Array,
+    ingredients: Array,
 });
 
 const Plats = mongoose.model('Plats', platsSchema);

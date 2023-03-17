@@ -16,6 +16,7 @@ router.post('/', (req, res) => {
         category: req.body.category,
         type: req.body.type,
         allergens: req.body.allergens,
+        ingredients: req.body.ingredients,
     });
     plats.save()
         .then(() => res.status(201).json({ message: 'Plats created !' }))

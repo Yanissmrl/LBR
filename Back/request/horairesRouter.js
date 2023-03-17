@@ -13,6 +13,7 @@ router.post('/', (req, res) => {
         day: req.body.day,
         morningH: req.body.morningH,
         eveningH: req.body.eveningH,
+        place: req.body.place
     });
     horaire.save()
         .then(() => res.status(201).json({ message: 'Horaire created !' }))
@@ -22,9 +23,23 @@ router.post('/', (req, res) => {
 // GET all horaires
 
 router.get('/', (req, res) => {
+
+
     Horaires.find()
-        .then(horaires => res.status(200).json(horaires))
+        .then(horaires => {
+            const datee = new Date()
+            const date = horaires.filter((item) => item.day.getDate() >= datee.getDate())
+            const horaire = date.sort((a, b) => a.day - b.day
+            )
+            return (
+                res.status(200).json(horaire)
+            )
+        }
+        )
         .catch(error => res.status(404).json({ error }));
 });
+
+
+
 
 module.exports = router;

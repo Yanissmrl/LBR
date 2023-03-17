@@ -42,13 +42,12 @@ export default function ResaChoice() {
         document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
-
         apiContext.postReservation({
-            day: "lundi",
+            day: day,
             name: dataName,
             email: dataEmail,
-            persons: 2,
-            hour: "12h00"
+            persons: places,
+            hour: hour
         }).then(res => {
             if (res) {
                 alert("Reservation envoyée");
@@ -63,6 +62,16 @@ export default function ResaChoice() {
 
     }, [reservation, apiContext])
 
+    // data.map((data) => {
+    //     const jsp = []
+    //     const truc= data.day
+    //     jsp.push(truc)
+    //     console.log("jsp", jsp);
+
+    // }
+    // )
+
+    console.log("data", data);
 
     if (!reservation) {
         return (
@@ -72,10 +81,13 @@ export default function ResaChoice() {
                 <div className="resaChoice">
                     {
                         data.map((element) => {
+                            const jour = new Date(element.day);
+                            const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
+
                             return (
                                 <div className="resaChoice__all">
                                     <div className="resaChoice__all_titleDiv">
-                                        <h3 className="resaChoice__all_titleDiv_title">{element.day}</h3>
+                                        <h3 className="resaChoice__all_titleDiv_title">{date}</h3>
                                     </div>
                                     <div className="resaChoice__all_content">
                                         <div className="resaChoice__all_content_text">
@@ -146,12 +158,12 @@ export default function ResaChoice() {
 
                                     <div onClick={() => {
                                         setPlaces(places - 1);
-                                        console.log(places);
                                     }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={moins} alt="moins" /></div>
+
                                     <p className="popup__form_placesChoice_selector_value">{places}</p>
+
                                     <div onClick={() => {
                                         setPlaces(places + 1);
-                                        console.log(places);
                                     }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={plus} alt="plus" /></div>
                                 </div>
                             </div>
