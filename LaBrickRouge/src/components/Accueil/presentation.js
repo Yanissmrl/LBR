@@ -1,5 +1,5 @@
 import image1 from '../../assets/image000001.png';
-import image2 from '../../assets/adelaide-et-jean-claude-bui-viennent-d-ouvrir-la-brick_4176035_540x312p.png';
+import image2 from '../../assets/adelaide-et-jean-claude.png';
 
 export default function presentation() {
 
