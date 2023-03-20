@@ -6,6 +6,7 @@ import HeaderCarte from '../routes/Carte';
 import Reservation from '../routes/reservation';
 import AdminAccueil from '../routes/adminAccueil';
 import Horaires from '../routes/adminAccueil';
+import Event from '../routes/event';
 import Login from '../routes/Login';
 
 export const AppContext = createContext(null)
@@ -26,6 +27,10 @@ export function AppProvider() {
     {
       path: '/reservation',
       element: <Reservation />
+    },
+    {
+      path: '/evenements',
+      element: <Event />
     },
 
     {

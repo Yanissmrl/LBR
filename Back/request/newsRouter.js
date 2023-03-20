@@ -19,12 +19,24 @@ router.post('/', (req, res) => {
         .then(() => res.status(201).json({ message: 'News created !' }))
         .catch(error => res.status(400).json({ error }));
 });
+// get all news
+router.get('/', (req, res) => {
+    News.find()
 
-// get news by name
-router.get('/:name', (req, res) => {
-    News.findOne({ name: req.params.name })
-        .then(news => res.status(200).json(news))
-        .catch(error => res.status(404).json({ error }));
+        .then(news => {
+            const day = new Date()
+            const dates = news.filter((item) => item.date >= day)
+            const event = dates.sort((a, b) => a.date - b.date
+            )
+            console.log("jsp", dates);
+
+            return (
+                res.status(200).json(event)
+            )
+        }
+        )
+        .catch(error => res.status(400).json({ error }));
 });
+
 
 module.exports = router;

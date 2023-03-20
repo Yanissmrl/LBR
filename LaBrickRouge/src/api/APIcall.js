@@ -14,6 +14,8 @@ export default function APIProvider(props) {
                 getUser: API.getUser,
                 getResaClient: API.getResaClient,
                 getPlats: API.getPlats,
+                getEvent: API.getEvent,
+                postEvent: API.postEvent
             }}>
             {props.children}
         </APIContext.Provider>
@@ -33,6 +35,14 @@ const API = {
             method: 'GET',
         }
         const response = await fetch(`${baseUrl}/menu`, header)
+        const data = await response.json()
+        return data
+    },
+    getEvent: async () => {
+        let header = {
+            method: 'GET',
+        }
+        const response = await fetch(`${baseUrl}/news`, header)
         const data = await response.json()
         return data
     },
@@ -88,6 +98,16 @@ const API = {
     postReservationAdmin: async (data) => {
 
         await fetch(`${baseUrl}/horaires`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+    },
+    postEvent: async (data) => {
+        console.log("data", data);
+        await fetch(`${baseUrl}/news`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

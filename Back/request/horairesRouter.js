@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
             const date = horaires.filter((item) => item.day.getDate() >= datee.getDate())
             const horaire = date.sort((a, b) => a.day - b.day
             )
+            console.log(date);
             return (
                 res.status(200).json(horaire)
             )

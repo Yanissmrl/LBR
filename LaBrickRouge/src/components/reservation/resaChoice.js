@@ -62,16 +62,6 @@ export default function ResaChoice() {
 
     }, [reservation, apiContext])
 
-    // data.map((data) => {
-    //     const jsp = []
-    //     const truc= data.day
-    //     jsp.push(truc)
-    //     console.log("jsp", jsp);
-
-    // }
-    // )
-
-    console.log("data", data);
 
     if (!reservation) {
         return (

@@ -19,7 +19,7 @@ export default function HeaderAccueil() {
 
     const root = "../../assets/";
     const image = data[0]?.image;
-    console.log(image);
+    // console.log(image);
 
     return (
         <header className='header'>

@@ -24,7 +24,22 @@ router.post('/', (req, res) => {
 // get all reservationClient
 router.get('/', (req, res) => {
     ResaClient.find()
-        .then(resaClient => res.status(200).json(resaClient))
+        .then(resaClient => {
+            const day = new Date()
+            const dates = resaClient.filter((item) => 
+            {
+                const date = new Date(item.day)
+                return date.getDate() === day.getDate()
+            })
+            const resa = dates.sort((a, b) => a.date - b.date
+            )
+            console.log("jsp", dates);
+
+            return (
+                res.status(200).json(resa)
+            )
+        }
+        )
         .catch(error => res.status(404).json({ error }));
 });
 

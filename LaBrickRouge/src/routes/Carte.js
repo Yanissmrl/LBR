@@ -13,7 +13,7 @@ export default function Carte() {
     const [page, setPage] = useState(1);
     return (
         <APIProvider>
-            <div>
+            <div className="page">
                 <Nav></Nav>
                 <div className="container">
                     <div className="carte-page">

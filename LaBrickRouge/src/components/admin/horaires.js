@@ -1,6 +1,5 @@
 import { useRef, useContext, useState } from "react";
 import { APIContext } from "../../api/APIcall";
-import moment from 'moment';
 
 export default function Horaires() {
     const apiContext = useContext(APIContext);
@@ -8,22 +7,19 @@ export default function Horaires() {
     const morningTime = useRef([]);
     const eveningTime = useRef([]);
     const placesRef = useRef(Number);
-    // const [hour, setHour] = useState([]);
     const morningTimeSelect = (e) => {
         morningTime.current.push(e)
-        console.log(morningTime);
     }
     const eveningTimeSelect = (e) => {
         eveningTime.current.push(e)
-        console.log("valueeeee", eveningTime);
     }
 
     const horairesSubmit = (e) => {
         e.preventDefault();
 
         const date = dateRef.current.value
-        const places = placesRef.current.value
         const dateObj = new Date(date);
+        const places = placesRef.current.value
 
 
         apiContext.postReservationAdmin({
@@ -43,7 +39,7 @@ export default function Horaires() {
         <div>
             <p>Horaires page admin</p>
 
-            <form onSubmit={horairesSubmit} action="">
+            <form onSubmit={horairesSubmit} >
                 <input ref={dateRef} type="date" />
                 <button>je sais pas</button>
                 <input ref={placesRef} placeholder="nombre de places" type="number" />
