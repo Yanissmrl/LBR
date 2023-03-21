@@ -18,6 +18,11 @@ export default function ResaChoice() {
     };
 
 
+    const [nom, setNom] = useState('');
+    const [email, setEmail] = useState('');
+    const [day, setDay] = useState('');
+    const [hour, setHour] = useState('');
+
     const handleClick = (day, hour) => {
         setDay(day)
         setHour(hour)
@@ -31,10 +36,6 @@ export default function ResaChoice() {
 
     const nameRef = useRef();
     const emailRef = useRef();
-    const [nom, setNom] = useState('');
-    const [email, setEmail] = useState('');
-    const [day, setDay] = useState('');
-    const [hour, setHour] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -169,7 +170,8 @@ export default function ResaChoice() {
                                     </div>
                                 </div>
 
-                                <button className="popup__form_submitButton_button" type="submit" >Envoyer</button>
+
+                                <div className="popup__form_submitButton_button" type="submit">Envoyer</div>
                             </div>
                         </form>
                     </div>
