@@ -170,8 +170,7 @@ export default function ResaChoice() {
                                     </div>
                                 </div>
 
-
-                                <div className="popup__form_submitButton_button" type="submit">Envoyer</div>
+                                <button className="popup__form_submitButton_button" type="submit">Valider</button>
                             </div>
                         </form>
                     </div>

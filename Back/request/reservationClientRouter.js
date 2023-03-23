@@ -33,7 +33,6 @@ router.get('/', (req, res) => {
             })
             const resa = dates.sort((a, b) => a.date - b.date
             )
-            console.log("jsp", dates);
 
             return (
                 res.status(200).json(resa)

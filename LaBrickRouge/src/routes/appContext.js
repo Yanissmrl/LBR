@@ -12,7 +12,7 @@ import Login from '../routes/Login';
 export const AppContext = createContext(null)
 
 export function AppProvider() {
-  const [user, setUser] = useState({ loggedIn: false })
+  const [user, setUser] = useState({ loggedIn: true })
 
   const router = createBrowserRouter([
     {
