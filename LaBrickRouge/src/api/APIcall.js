@@ -15,7 +15,8 @@ export default function APIProvider(props) {
                 getResaClient: API.getResaClient,
                 getPlats: API.getPlats,
                 getEvent: API.getEvent,
-                postEvent: API.postEvent
+                postEvent: API.postEvent,
+                updateHoraire: API.updateHoraire,
             }}>
             {props.children}
         </APIContext.Provider>
@@ -106,7 +107,6 @@ const API = {
         });
     },
     postEvent: async (data) => {
-        console.log("data", data);
         await fetch(`${baseUrl}/news`, {
             method: 'POST',
             headers: {
@@ -114,5 +114,14 @@ const API = {
             },
             body: JSON.stringify(data)
         });
-    }
+    },
+    updateHoraire: async (data) => {
+        await fetch(`${baseUrl}/horaires/:id`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+    },
 }

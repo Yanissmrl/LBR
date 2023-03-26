@@ -26,7 +26,7 @@ export default function Horaires() {
             day: dateObj,
             morningH: morningTime.current,
             eveningH: eveningTime.current,
-            place: places
+            AvailablePlaces: places
         }).then(res => {
             if (res) {
                 alert("Reservation envoyée");

@@ -18,31 +18,71 @@ export default function ResaChoice() {
     };
 
 
+    useEffect(() => {
+
+        apiContext.getHoraires().then(data => setData(data));
+
+    }, [reservation, apiContext])
+
+
     const [nom, setNom] = useState('');
     const [email, setEmail] = useState('');
     const [day, setDay] = useState('');
     const [hour, setHour] = useState('');
+    const [id, setId] = useState('');
 
-    const handleClick = (day, hour) => {
+    const dayFormat = new Date(day).toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
+    // const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
+
+    const handleClick = (day, id, hour) => {
         setDay(day)
         setHour(hour)
         setShowPopup(true);
         setNom('')
         setEmail('')
+        setId(id)
         document.getElementById('dive').classList.add("bg-opacity")
+
     };;
 
     const [places, setPlaces] = useState(0);
-
     const nameRef = useRef();
     const emailRef = useRef();
 
+    // console.log(data[0]?._id);
+    // for (let i = 0; i < id.length; i++) {
+    //     if (data[i]?._id === id) {
+    //         let availablePlaces = 0;
+    //         console.log("places ", places);
+    //         availablePlaces = data.AvailablePlaces - places;
+    //         console.log("AvailablePlaces", availablePlaces);
+    //     }
+    // }
+
+
+    console.log("id", id);
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowPopup(false);
         document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
+        console.log("test", id);
+        console.log("test2", data._id);
+        if (id === data._id) {
+            apiContext.updateHoraire({
+                day: day,
+                hour: hour,
+                AvailablePlaces: places
+            }).then(res => {
+                if (res) {
+                    alert("Horaire modifié");
+                }
+            });
+        }
+
+
+
         apiContext.postReservation({
             day: day,
             name: dataName,
@@ -56,13 +96,6 @@ export default function ResaChoice() {
         });
 
     };
-
-    useEffect(() => {
-
-        apiContext.getHoraires().then(data => setData(data));
-
-    }, [reservation, apiContext])
-
 
     if (!reservation) {
         return (
@@ -87,7 +120,7 @@ export default function ResaChoice() {
                                                 {
                                                     element.morningH.map((e) => {
                                                         return (
-                                                            <p onClick={() => { handleClick(element.day, e) }} className="resaChoice__all_content_text_txt_p">{e}</p>
+                                                            <p onClick={() => { handleClick(element.day, element._id, e) }} className="resaChoice__all_content_text_txt_p">{e}</p>
 
                                                         )
                                                     })
@@ -117,12 +150,13 @@ export default function ResaChoice() {
                     }
 
                 </div>
+
                 {showPopup && (
 
                     <div className="popup">
                         <div className="popup__closeButton" ><img onClick={() => { closePopup() }} className="popup__closeButton_image" src={croix} alt="close" /></div>
 
-                        <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{day}</span> à <span className="span">{hour}</span></h2>
+                        <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{dayFormat}</span> à <span className="span">{hour}</span></h2>
 
                         <form onSubmit={handleSubmit} className="popup__form" action="submit">
 
@@ -148,13 +182,19 @@ export default function ResaChoice() {
                                     {/* button avec le nombre de personnes */}
 
                                     <div onClick={() => {
-                                        setPlaces(places - 1);
+                                        setPlaces(places - 1)
+                                        if (places <= 0) {
+                                            setPlaces(0)
+                                        };
                                     }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={moins} alt="moins" /></div>
 
                                     <p className="popup__form_placesChoice_selector_value">{places}</p>
 
                                     <div onClick={() => {
-                                        setPlaces(places + 1);
+                                        setPlaces(places + 1)
+                                        if (places >= 20) {
+                                            setPlaces(20)
+                                        };
                                     }} className="popup__form_placesChoice_selector_nav"><img className="popup__form_placesChoice_selector_nav_image" src={plus} alt="plus" /></div>
                                 </div>
                             </div>
