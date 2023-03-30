@@ -20,7 +20,19 @@ router.post('/', (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
-// GET all horaires
+router.put('/:id', async (req, res) => {
+    const horaire = await Horaires.findById(req.params.id);
+    try {
+        await horaire.updateOne({
+            $set: {
+                AvailablePlaces: horaire.AvailablePlaces - req.body.AvailablePlaces,
+            }
+        }, { new: true });
+        res.status(200).json(horaire);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 router.get('/', (req, res) => {
 
@@ -38,21 +50,5 @@ router.get('/', (req, res) => {
         )
         .catch(error => res.status(404).json({ error }));
 });
-
-// PUT one horaire
-
-router.put('/:id', (req, res) => {
-    Horaires.updateOne(
-        { _id: req.params.id },
-        { ...req.body, _id: req.params.id },
-        () => Horaires.find((err, horaires) => {
-            if (err) {
-                res.status(404).json({ err })
-            };
-            res.status(200).json({ horaires })
-        }));
-
-});
-
 
 module.exports = router;

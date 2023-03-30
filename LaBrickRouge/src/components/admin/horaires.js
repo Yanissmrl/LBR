@@ -1,5 +1,6 @@
 import { useRef, useContext, useState } from "react";
 import { APIContext } from "../../api/APIcall";
+import EditHoraires from "./editHoraires";
 
 export default function Horaires() {
     const apiContext = useContext(APIContext);
@@ -67,6 +68,9 @@ export default function Horaires() {
                 eveningTimeSelect(e.target.innerHTML)
             }}>20:30</button>
 
+            <div>
+                <EditHoraires />
+            </div>
         </div>
 
 

@@ -115,13 +115,17 @@ const API = {
             body: JSON.stringify(data)
         });
     },
-    updateHoraire: async (data) => {
-        await fetch(`${baseUrl}/horaires/:id`, {
+
+    updateHoraire: async (id, data) => {
+        console.log("id", id);
+        console.log("data", data);
+        await fetch(`${baseUrl}/horaires/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
-    },
+    }
+
 }

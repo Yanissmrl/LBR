@@ -17,22 +17,26 @@ export default function ResaChoice() {
         document.getElementById('dive').classList.remove("bg-opacity")
     };
 
-
+    // appel de l'api pour récupérer les horaires de resa 
     useEffect(() => {
 
         apiContext.getHoraires().then(data => setData(data));
 
     }, [reservation, apiContext])
 
+    // console.log("places", data[0]?.AvailablePlaces);
 
+    // name et email du client
     const [nom, setNom] = useState('');
     const [email, setEmail] = useState('');
+    // jour et H de la résa
     const [day, setDay] = useState('');
     const [hour, setHour] = useState('');
+    // id du jour cliqué
     const [id, setId] = useState('');
+    const [jsp, setJsp] = useState(0)
 
     const dayFormat = new Date(day).toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
-    // const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
     const handleClick = (day, id, hour) => {
         setDay(day)
@@ -46,43 +50,92 @@ export default function ResaChoice() {
     };;
 
     const [places, setPlaces] = useState(0);
+
     const nameRef = useRef();
     const emailRef = useRef();
 
-    // console.log(data[0]?._id);
-    // for (let i = 0; i < id.length; i++) {
-    //     if (data[i]?._id === id) {
-    //         let availablePlaces = 0;
-    //         console.log("places ", places);
-    //         availablePlaces = data.AvailablePlaces - places;
-    //         console.log("AvailablePlaces", availablePlaces);
+
+    // je veux deduire le nombre de palces select par le client et en deduire celon le nombre dispo pour 
+    // l'envoyer dans la methode put au bon jour, c'est a dire le J cliqué 
+
+
+    // data.map((element) => {
+    //     if (element._id === id) {
+    //         console.log("element", element);
+    //         console.log("places", element.AvailablePlaces);
+    //         const jspp = element.AvailablePlaces - places
+    //         setJsp(jspp)
     //     }
-    // }
+    //     return (jsp)
 
+    // // })
+    // useEffect(() => {
 
-    console.log("id", id);
+    //     data.forEach((element) => {
+    //         if (element._id === id) {
+    //             console.log("element", element);
+    //             console.log("places", element.AvailablePlaces);
+    //             const jspp = element.AvailablePlaces - places
+    //             console.log("jspp", jspp);
+    //             setJsp(jspp)
+    //             console.log("jsp", jspp);
+    //         }
+    //         return (jsp)
+    //     })
+
+    // }, [jsp])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowPopup(false);
         document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
-        console.log("test", id);
-        console.log("test2", data._id);
-        if (id === data._id) {
-            apiContext.updateHoraire({
-                day: day,
-                hour: hour,
-                AvailablePlaces: places
-            }).then(res => {
-                if (res) {
-                    alert("Horaire modifié");
-                }
-            });
-        }
 
 
 
+        // data.map((element) => {
+        //     if (element._id === id) {
+        //         console.log("element", element);
+        //         console.log("places", element.AvailablePlaces);
+        //         const jspp = element.AvailablePlaces - places
+        //         console.log("jspp", jspp);
+        //         setJsp(jspp)
+        //         console.log("jsp", jsp);
+        //     }
+        //     return (jsp)
+
+        // })
+
+
+
+        // data.forEach((element) => {
+        //     if (element._id === id) {
+        //         console.log("element", element);
+        //         console.log("places", element.AvailablePlaces);
+        //         const jspp = element.AvailablePlaces - places
+        //         console.log("jspp", jspp);
+        //         setJsp(jspp)
+        //         console.log("jsp", jspp);
+        //     }
+        //     return (jsp)
+        // })
+
+
+
+        // console.log("jsp", jsp);
+
+        // methode put pour envoyer les places restantes à la date cliqué selon l'id
+        apiContext.updateHoraire(id, {
+
+            AvailablePlaces: places
+        }).then(res => {
+
+            if (res) {
+                alert("Horaire modifié");
+            }
+        });
+        // methode post pour envoyer une resa en base 
         apiContext.postReservation({
             day: day,
             name: dataName,
@@ -120,6 +173,9 @@ export default function ResaChoice() {
                                                 {
                                                     element.morningH.map((e) => {
                                                         return (
+                                                            // ici je recup l'id du jour cliqué et l'heure cliqué du jour
+                                                            // pour recup  le J c'est element.day et pour l'h c'est e
+                                                            // je recup l'id du jour cliqué pour le mettre dans la methode put avec element._id
                                                             <p onClick={() => { handleClick(element.day, element._id, e) }} className="resaChoice__all_content_text_txt_p">{e}</p>
 
                                                         )
