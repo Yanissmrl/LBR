@@ -1,37 +1,31 @@
-
+import { useContext, useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { APIContext } from "../../api/APIcall";
 
 
 
 export default function ResaVue() {
 
 
+    const apiContext = useContext(APIContext);
+    let { reservation } = useParams();
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+        apiContext.getHoraires().then(data => setData(data));
+
+    }, [reservation, apiContext])
 
     return (
         <div className="resaVue">
             <div className="resaVue__all">
-                <h2 className="resaVue__all_title">Reservations</h2>
-
-                <div className="resaVue__all_content">
-                    <h3 className="resaVue__all_content_title">Reservations de libre :</h3>
-
-                    <div className="resaVue__all_content_text">
-                        <h4 className="resaVue__all_content_text_title">Aujourd'hui</h4>
-                        <div className="resaVue__all_content_text_resacontent">
-                            <p className="resaVue__all_content_text_resacontent_txt">12h00</p>
-                            <p className="resaVue__all_content_text_resacontent_txt">3 places</p>
-                        </div>
-                    </div>
-
-                    <div className="resaVue__all_content_text">
-                        <h4 className="resaVue__all_content_text_title">Demain</h4>
-                        <div className="resaVue__all_content_text_resacontent">
-                            <p className="resaVue__all_content_text_resacontent_txt">12h00</p>
-                            <p className="resaVue__all_content_text_resacontent_txt">5 places</p>
+                <p> Pour selectionner une reservation, cliquez sur une horaire du jour de votre votre choix</p>
 
 
-                        </div>
-                    </div>
-                </div>
+                <p>Pour le premier service du jour il nous resteras {data[0]?.AvailablePlaces} places disponibles</p>
+                <p>Pour le second service du jour il nous resteras 467 places disponibles</p>
+                <button>Accéder à la carte</button>
             </div>
 
         </div>

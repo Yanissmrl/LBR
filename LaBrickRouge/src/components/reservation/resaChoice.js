@@ -24,7 +24,7 @@ export default function ResaChoice() {
 
     }, [reservation, apiContext])
 
-    // console.log("places", data[0]?.AvailablePlaces);
+
 
     // name et email du client
     const [nom, setNom] = useState('');
@@ -34,7 +34,7 @@ export default function ResaChoice() {
     const [hour, setHour] = useState('');
     // id du jour cliqué
     const [id, setId] = useState('');
-    const [jsp, setJsp] = useState(0)
+
 
     const dayFormat = new Date(day).toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
@@ -47,44 +47,28 @@ export default function ResaChoice() {
         setId(id)
         document.getElementById('dive').classList.add("bg-opacity")
 
-    };;
+        for (let i = 0; i < data.length; i++) {
+            if (day === data[i].day) {
+                const dayFilter = data[i].morningH;
+                const test = dayFilter.filter(item => item === hour);
+                console.log("test", test);
+                setDayFilter(test)
+            } else {
+                console.log("err dans le dor de dayFilter");
+            }
+        }
 
+
+    };
+    const [dayFilter, setDayFilter] = useState([]);
     const [places, setPlaces] = useState(0);
-
+    const [firstPlaces, setFirstPlaces] = useState(0);
+    const [secondPlaces, setSecondPlaces] = useState(0);
     const nameRef = useRef();
     const emailRef = useRef();
 
-
-    // je veux deduire le nombre de palces select par le client et en deduire celon le nombre dispo pour 
-    // l'envoyer dans la methode put au bon jour, c'est a dire le J cliqué 
-
-
-    // data.map((element) => {
-    //     if (element._id === id) {
-    //         console.log("element", element);
-    //         console.log("places", element.AvailablePlaces);
-    //         const jspp = element.AvailablePlaces - places
-    //         setJsp(jspp)
-    //     }
-    //     return (jsp)
-
-    // // })
-    // useEffect(() => {
-
-    //     data.forEach((element) => {
-    //         if (element._id === id) {
-    //             console.log("element", element);
-    //             console.log("places", element.AvailablePlaces);
-    //             const jspp = element.AvailablePlaces - places
-    //             console.log("jspp", jspp);
-    //             setJsp(jspp)
-    //             console.log("jsp", jspp);
-    //         }
-    //         return (jsp)
-    //     })
-
-    // }, [jsp])
-
+    const [useTest, setUseTest] = useState(0)
+    const testRef = useRef();
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowPopup(false);
@@ -92,49 +76,29 @@ export default function ResaChoice() {
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
 
+        // console.log("dayFilter", dayFilter);
+        // console.log("hour", hour);
+
+        if (hour === dayFilter[0]) {
+
+            testRef.current = places
+
+        }
 
 
-        // data.map((element) => {
-        //     if (element._id === id) {
-        //         console.log("element", element);
-        //         console.log("places", element.AvailablePlaces);
-        //         const jspp = element.AvailablePlaces - places
-        //         console.log("jspp", jspp);
-        //         setJsp(jspp)
-        //         console.log("jsp", jsp);
-        //     }
-        //     return (jsp)
-
-        // })
-
-
-
-        // data.forEach((element) => {
-        //     if (element._id === id) {
-        //         console.log("element", element);
-        //         console.log("places", element.AvailablePlaces);
-        //         const jspp = element.AvailablePlaces - places
-        //         console.log("jspp", jspp);
-        //         setJsp(jspp)
-        //         console.log("jsp", jspp);
-        //     }
-        //     return (jsp)
-        // })
-
-
-
-        // console.log("jsp", jsp);
 
         // methode put pour envoyer les places restantes à la date cliqué selon l'id
         apiContext.updateHoraire(id, {
+            firstAvailablePlaces: testRef.current,
+            secondAvailablePlaces: secondPlaces
 
-            AvailablePlaces: places
         }).then(res => {
 
             if (res) {
                 alert("Horaire modifié");
             }
         });
+
         // methode post pour envoyer une resa en base 
         apiContext.postReservation({
             day: day,
@@ -161,6 +125,7 @@ export default function ResaChoice() {
                             const jour = new Date(element.day);
                             const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
+
                             return (
                                 <div className="resaChoice__all">
                                     <div className="resaChoice__all_titleDiv">
@@ -172,11 +137,13 @@ export default function ResaChoice() {
                                             <div className="resaChoice__all_content_text_txt">
                                                 {
                                                     element.morningH.map((e) => {
+                                                        const heure = new Date(e);
+                                                        const heureFormat = heure.toLocaleString("fr-FR", { hour: "numeric", minute: "numeric" });
                                                         return (
                                                             // ici je recup l'id du jour cliqué et l'heure cliqué du jour
                                                             // pour recup  le J c'est element.day et pour l'h c'est e
                                                             // je recup l'id du jour cliqué pour le mettre dans la methode put avec element._id
-                                                            <p onClick={() => { handleClick(element.day, element._id, e) }} className="resaChoice__all_content_text_txt_p">{e}</p>
+                                                            <p onClick={() => { handleClick(element.day, element._id, e) }} className="resaChoice__all_content_text_txt_p">{heureFormat}</p>
 
                                                         )
                                                     })
@@ -192,8 +159,10 @@ export default function ResaChoice() {
                                             <div className="resaChoice__all_content_text_txt">
                                                 {
                                                     element.eveningH.map((e) => {
+                                                        const heure = new Date(e);
+                                                        const heureFormat = heure.toLocaleString("fr-FR", { hour: "numeric", minute: "numeric" });
                                                         return (
-                                                            <p onClick={() => { handleClick(element.day, e) }} className="resaChoice__all_content_text_txt_p">{e}</p>
+                                                            <p onClick={() => { handleClick(element.day, e) }} className="resaChoice__all_content_text_txt_p">{heureFormat}</p>
                                                         )
                                                     })
                                                 }
@@ -210,7 +179,18 @@ export default function ResaChoice() {
                 {showPopup && (
 
                     <div className="popup">
-                        <div className="popup__closeButton" ><img onClick={() => { closePopup() }} className="popup__closeButton_image" src={croix} alt="close" /></div>
+                        <div className="popup__closeButton" >
+                            {/* 
+                            <label class="hamburger">
+                                <input type="checkbox" />
+                                <svg viewBox="0 0 32 32">
+                                    <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                                    <path class="line" d="M7 16 27 16"></path>
+                                </svg>
+                            </label> */}
+
+                            <img onClick={() => { closePopup() }} className="popup__closeButton_image" src={croix} alt="close" />
+                        </div>
 
                         <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{dayFormat}</span> à <span className="span">{hour}</span></h2>
 
@@ -255,19 +235,9 @@ export default function ResaChoice() {
                                 </div>
                             </div>
 
-                            <div className="popup__form_submitButton">
 
-                                <div className="popup__form_submitButton_arrow">
-                                    <div className="popup__form_submitButton_arrow_line">
-                                        {/* trait */}
-                                    </div>
-                                    <div className="popup__form_submitButton_arrow_edge">
-                                        {/* carré pour faire la flèche */}
-                                    </div>
-                                </div>
+                            <button className="popup__form_submitButton_button" type="submit">Valider</button>
 
-                                <button className="popup__form_submitButton_button" type="submit">Valider</button>
-                            </div>
                         </form>
                     </div>
                 )}

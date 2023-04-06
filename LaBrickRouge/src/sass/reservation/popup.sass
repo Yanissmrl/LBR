@@ -3,10 +3,11 @@
     padding: 2rem
     position: absolute
     z-index: 2
-    max-width: 37%
+    max-width: 40%
+    position: absolute
     top: 50%
     left: 50%
-    transform: translate(-50%,-50%)
+    transform: translate(-50%, -50%)
     font-family: "baloo 2", sans-serif
     &__closeButton
         height: 1.5rem
@@ -115,3 +116,35 @@
     width: 100%
     height: 100%
     z-index: 1
+
+    // addapter tt ca en BEM
+// .hamburger
+//     cursor: pointer
+//     input
+//         display: none
+//     svg
+//         height: 3em
+//         transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//         webkit-transition: -webkit-transform 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//         transition: -webkit-transform 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//         transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//         transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//         .line
+//             fill: none
+//             stroke: #212121
+//             stroke-linecap: round
+//             stroke-linejoin: round
+//             stroke-width: 3
+//             -webkit-transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1)
+//             transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1)
+
+//     input:checked ~ svg
+//         -webkit-transform: rotate(-45deg)
+//         -ms-transform: rotate(-45deg)
+//         transform: rotate(-45deg)
+
+//     .line-top-bottom
+//         stroke-dasharray: 12 63
+// .hamburger input:checked ~ svg .line-top-bottom
+//     stroke-dasharray: 20 300
+//     stroke-dashoffset: -32.42

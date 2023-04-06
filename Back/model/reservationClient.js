@@ -9,7 +9,7 @@ const resaClientSchema = mongoose.Schema({
     //nombre de personnes pour la réservation qui seras a comparer avec le nombre de places disponibles pour la date et l'heure choisie 
     persons: { type: Number, required: true },
     // choisir l'heure de resa selon les h d'ouverture et de fermeture
-    hour: { type: String, required: true },
+    hour: { type: Date, required: true },
 
 
 });

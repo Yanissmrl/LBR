@@ -13,7 +13,8 @@ router.post('/', (req, res) => {
         day: req.body.day,
         morningH: req.body.morningH,
         eveningH: req.body.eveningH,
-        AvailablePlaces: req.body.AvailablePlaces,
+        firstAvailablePlaces: req.body.firstAvailablePlaces,
+        secondAvailablePlaces: req.body.secondAvailablePlaces,
     });
     horaire.save()
         .then(() => res.status(201).json({ message: 'Horaire created !' }))
@@ -25,7 +26,8 @@ router.put('/:id', async (req, res) => {
     try {
         await horaire.updateOne({
             $set: {
-                AvailablePlaces: horaire.AvailablePlaces - req.body.AvailablePlaces,
+                firstAvailablePlaces: horaire.firstAvailablePlaces - req.body.firstAvailablePlaces,
+                secondAvailablePlaces: horaire.secondAvailablePlaces - req.body.secondAvailablePlaces,
             }
         }, { new: true });
         res.status(200).json(horaire);
@@ -41,8 +43,7 @@ router.get('/', (req, res) => {
         .then(horaires => {
             const datee = new Date()
             const date = horaires.filter((item) => item.day.getDate() >= datee.getDate())
-            const horaire = date.sort((a, b) => a.day - b.day
-            )
+            const horaire = date.sort((a, b) => a.day - b.day)
             return (
                 res.status(200).json(horaire)
             )
