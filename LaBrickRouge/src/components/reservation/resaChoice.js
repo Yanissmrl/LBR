@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
+import parseHour from "../../parseData";
 import { useParams } from "react-router-dom";
 import { APIContext } from "../../api/APIcall";
 import croix from '../../assets/croix.svg';
@@ -50,11 +51,12 @@ export default function ResaChoice() {
         for (let i = 0; i < data.length; i++) {
             if (day === data[i].day) {
                 const dayFilter = data[i].morningH;
-                const test = dayFilter.filter(item => item === hour);
-                console.log("test", test);
-                setDayFilter(test)
+                console.log("dayFilter", dayFilter);
+                const Dfilter = dayFilter.filter(item => item === hour);
+                console.log("Dfiltrer", Dfilter);
+                setDayFilter(Dfilter)
             } else {
-                console.log("err dans le dor de dayFilter");
+                console.log("err dans le for de dayFilter");
             }
         }
 
@@ -62,13 +64,11 @@ export default function ResaChoice() {
     };
     const [dayFilter, setDayFilter] = useState([]);
     const [places, setPlaces] = useState(0);
-    const [firstPlaces, setFirstPlaces] = useState(0);
-    const [secondPlaces, setSecondPlaces] = useState(0);
     const nameRef = useRef();
     const emailRef = useRef();
+    const firstPlacesRef = useRef(0);
+    const secondPlacesRef = useRef(0);
 
-    const [useTest, setUseTest] = useState(0)
-    const testRef = useRef();
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowPopup(false);
@@ -76,21 +76,31 @@ export default function ResaChoice() {
         const dataName = nameRef.current.value
         const dataEmail = emailRef.current.value
 
-        // console.log("dayFilter", dayFilter);
-        // console.log("hour", hour);
+        const hourList = ["10:00", "14:00"]
 
-        if (hour === dayFilter[0]) {
+        const objetHeure = hourList.map(hour => {
+            const [heures, minutes] = hour.split(":");
+            const objetHeure = new Date();
+            objetHeure.setHours(heures);
+            objetHeure.setMinutes(minutes);
+            return objetHeure;
+        });
 
-            testRef.current = places
 
+        const hourParsed = parseHour(hour);
+        const hourParsed2 = parseHour(objetHeure[0]);
+        const hourParsed3 = parseHour(objetHeure[1]);
+
+        if (hourParsed >= hourParsed2 && hourParsed <= hourParsed3) {
+            firstPlacesRef.current = places
+        } else {
+            secondPlacesRef.current = places
         }
-
-
 
         // methode put pour envoyer les places restantes à la date cliqué selon l'id
         apiContext.updateHoraire(id, {
-            firstAvailablePlaces: testRef.current,
-            secondAvailablePlaces: secondPlaces
+            firstAvailablePlaces: firstPlacesRef.current,
+            secondAvailablePlaces: secondPlacesRef.current
 
         }).then(res => {
 
@@ -162,7 +172,7 @@ export default function ResaChoice() {
                                                         const heure = new Date(e);
                                                         const heureFormat = heure.toLocaleString("fr-FR", { hour: "numeric", minute: "numeric" });
                                                         return (
-                                                            <p onClick={() => { handleClick(element.day, e) }} className="resaChoice__all_content_text_txt_p">{heureFormat}</p>
+                                                            <p onClick={() => { handleClick(element.day, element._id, e) }} className="resaChoice__all_content_text_txt_p">{heureFormat}</p>
                                                         )
                                                     })
                                                 }
