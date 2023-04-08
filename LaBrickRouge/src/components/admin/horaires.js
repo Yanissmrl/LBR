@@ -1,6 +1,5 @@
 import { useRef, useContext, useState } from "react";
 import { APIContext } from "../../api/APIcall";
-import EditHoraires from "./editHoraires";
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 
@@ -73,6 +72,7 @@ export default function Horaires() {
 
     }
 
+
     return (
         <div>
             <p>Horaires page admin</p>
@@ -80,8 +80,14 @@ export default function Horaires() {
             <form onSubmit={horairesSubmit} >
                 <input ref={dateRef} type="date" />
                 <button>je sais pas</button>
-                <input ref={firstPlacesRef} placeholder="first places" type="number" />
-                <input ref={secondPlacesRef} placeholder="second places" type="number" />
+                <div>
+                    <label >Places premier service</label>
+                    <input className="numberInput" ref={firstPlacesRef} placeholder="0" type="number" />
+                </div>
+                <div>
+                    <label >Places deuxième service</label>
+                    <input className="numberInput" ref={secondPlacesRef} placeholder="0" type="number" />
+                </div>
 
             </form>
             <button onClick={(e) => {
@@ -108,7 +114,6 @@ export default function Horaires() {
             }}>20:30</button>
 
             <div>
-                <EditHoraires />
             </div>
         </div>
 

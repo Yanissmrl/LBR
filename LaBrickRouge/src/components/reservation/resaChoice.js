@@ -202,7 +202,7 @@ export default function ResaChoice() {
                             <img onClick={() => { closePopup() }} className="popup__closeButton_image" src={croix} alt="close" />
                         </div>
 
-                        <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{dayFormat}</span> à <span className="span">{hour}</span></h2>
+                        <h2 id="resaChoice" className="popup__title">Reservations pour <span className="span">{dayFormat}</span> à <span className="span">{new Date(hour).getHours()}:{new Date(hour).getMinutes()} </span></h2>
 
                         <form onSubmit={handleSubmit} className="popup__form" action="submit">
 
