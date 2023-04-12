@@ -23,17 +23,47 @@ router.post('/', (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const horaire = await Horaires.findById(req.params.id);
-    try {
-        await horaire.updateOne({
-            $set: {
-                firstAvailablePlaces: horaire.firstAvailablePlaces - req.body.firstAvailablePlaces,
-                secondAvailablePlaces: horaire.secondAvailablePlaces - req.body.secondAvailablePlaces,
-            }
-        }, { new: true });
-        res.status(200).json(horaire);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    const newFirstAvailablePlaces = horaire.firstAvailablePlaces - req.body.firstAvailablePlaces;
+    const newSecondAvailablePlaces = horaire.secondAvailablePlaces - req.body.secondAvailablePlaces;
+    if (newFirstAvailablePlaces < 0) {
+        try {
+            await horaire.updateOne({
+                $set: {
+                    firstAvailablePlaces: 0,
+                    secondAvailablePlaces: newSecondAvailablePlaces,
+                }
+            }, { new: true });
+            res.status(200).json(horaire);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    } else if (newSecondAvailablePlaces < 0) {
+        try {
+            await horaire.updateOne({
+                $set: {
+                    firstAvailablePlaces: newFirstAvailablePlaces,
+                    secondAvailablePlaces: 0,
+                }
+            }, { new: true });
+            res.status(200).json(horaire);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    } else {
+        try {
+            await horaire.updateOne({
+                $set: {
+                    firstAvailablePlaces: newFirstAvailablePlaces,
+                    secondAvailablePlaces: newSecondAvailablePlaces,
+                }
+            }, { new: true });
+            res.status(200).json(horaire);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
+
+
 });
 
 router.get('/', (req, res) => {

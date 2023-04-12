@@ -5,6 +5,7 @@ import { APIContext } from "../../api/APIcall";
 import croix from '../../assets/croix.svg';
 import plus from '../../assets/Plus.svg';
 import moins from '../../assets/Moins.svg';
+import Loader from '../loader';
 
 export default function ResaChoice() {
 
@@ -12,6 +13,7 @@ export default function ResaChoice() {
     let { reservation } = useParams();
     const [data, setData] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const closePopup = () => {
         setShowPopup(false);
@@ -71,6 +73,7 @@ export default function ResaChoice() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoader(true);
         setShowPopup(false);
         document.getElementById('dive').classList.remove("bg-opacity")
         const dataName = nameRef.current.value
@@ -117,6 +120,7 @@ export default function ResaChoice() {
             persons: places,
             hour: hour
         }).then(res => {
+            setLoader(false);
             if (res) {
                 alert("Reservation envoyée");
             }
@@ -183,6 +187,9 @@ export default function ResaChoice() {
                             )
                         })
                     }
+                    {loader && (
+                        <Loader />
+                    )}
 
                 </div>
 
