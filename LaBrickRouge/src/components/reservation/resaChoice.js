@@ -113,8 +113,13 @@ export default function ResaChoice() {
         });
 
         // methode post pour envoyer une resa en base 
+        // console.log("day", day);
+        const newDay = new Date(day);
+        // console.log("newDay", newDay);
+        console.log("hour", hour);
+        
         apiContext.postReservation({
-            day: day,
+            day: newDay,
             name: dataName,
             email: dataEmail,
             persons: places,

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const resaClientSchema = mongoose.Schema({
       // mettre name email persons hour dans un objet/tableau client
-    day: { type: String, required: true }, 
+    day: { type: Date, required: true }, 
     name: { type: String, required: true },
     email: { type: String, required: true },
     //nombre de personnes pour la réservation qui seras a comparer avec le nombre de places disponibles pour la date et l'heure choisie 

@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     ResaClient.find()
         .then(resaClient => {
-            console.log("resaClient ", resaClient);
+            // console.log("resaClient ", resaClient);
             const day = new Date()
             const dates = resaClient.filter((item) => {
                 const date = new Date(item.day)

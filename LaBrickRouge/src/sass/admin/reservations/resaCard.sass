@@ -1,0 +1,62 @@
+.resaCard
+    border: 2px solid $light-gray
+    border-radius: 5px
+    padding: 1rem
+    &__title
+        margin-bottom: 3rem
+        font-family: 'baloo 2', sans-serif
+        text-align: center
+        font-size: 1.5rem
+        font-weight: 500
+        text-transform: uppercase
+    &__grid
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+        gap: 2rem
+        &_all
+            font-family: 'baloo 2', sans-serif
+            &_day
+                font-family: "baloo 2", sans-serif
+                text-align: center
+                font-size: 1.5rem
+                font-weight: 500
+                &:first-letter
+                    text-transform: uppercase
+            &_card
+                padding: 1rem
+                border-radius: 5px
+                background-color: $light-gray
+                // box-shadow: 2px 4px 12px rgba(0,0,0,.08)
+                // transition: all .3s cubic-bezier(0,0,.5,1)
+                // transition-duration: 0.1s
+                // transition-timing-function: cubic-bezier(0, 0, 0.5, 1)
+                // transition-delay: 0s
+                // transition-property: all
+                // &:hover
+                //     transform: scale(1.02)
+                &_content
+                    margin-bottom: 10px
+                    &_title
+                        margin-bottom: 5px
+                        font-size: 1.2rem
+                        font-weight: 500
+                    &_hourList
+                        display: grid
+                        grid-template-columns: repeat(2, 1fr)
+                        font-family: 'nunito', sans-serif
+                        color: $red
+                        font-weight: 600
+                        &_hour
+                            margin-bottom: 5px
+                    &_places
+                        margin-top: 5px
+                        .span
+                            color: $red
+                            font-weight: 500
+.underline
+    display: flex
+    justify-content: center
+    margin: 0.5rem 0
+    &__line
+        width: 90%
+        border: 1px solid $red
