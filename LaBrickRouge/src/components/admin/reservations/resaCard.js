@@ -9,6 +9,13 @@ export default function ResaCard() {
     let { reservation } = useParams();
     const [data, setData] = useState([]);
 
+    // const handleDelete = (id) => {
+    //     apiContext.deleteReservation(id).then(res => {
+    //         if (res) {
+    //             alert("Reservation supprimée");
+    //         }
+    //     });
+    // }
 
     useEffect(() => {
 
@@ -32,6 +39,7 @@ export default function ResaCard() {
 
                             return (
                                 <div className="resaCard__grid_all" key={index} >
+                                    {/* <button onClick={handleDelete()}></button> */}
                                     <p className="resaCard__grid_all_day">{date}</p>
                                     <div className="resaCard__grid_all_card">
                                         <div>
