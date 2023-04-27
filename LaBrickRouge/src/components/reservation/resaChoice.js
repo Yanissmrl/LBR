@@ -68,8 +68,8 @@ export default function ResaChoice() {
     const [places, setPlaces] = useState(0);
     const nameRef = useRef();
     const emailRef = useRef();
-    const firstPlacesRef = useRef(0);
-    const secondPlacesRef = useRef(0);
+    const firstPlacesRef = useRef();
+    const secondPlacesRef = useRef();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -101,7 +101,10 @@ export default function ResaChoice() {
         }
 
         // methode put pour envoyer les places restantes à la date cliqué selon l'id
+        // console.log(firstPlacesRef.current);
+        // console.log(secondPlacesRef.current);
         apiContext.updateHoraire(id, {
+            page:"resaChoice",
             firstAvailablePlaces: firstPlacesRef.current,
             secondAvailablePlaces: secondPlacesRef.current
 
@@ -117,7 +120,7 @@ export default function ResaChoice() {
         const newDay = new Date(day);
         // console.log("newDay", newDay);
         console.log("hour", hour);
-        
+
         apiContext.postReservation({
             day: newDay,
             name: dataName,

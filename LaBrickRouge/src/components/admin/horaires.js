@@ -4,6 +4,9 @@ import { APIContext } from "../../api/APIcall";
 import ResaCard from "./reservations/resaCard";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
+// import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 
 // import Calendar from 'react-calendar';
@@ -28,6 +31,8 @@ export default function Horaires() {
     const apiContext = useContext(APIContext);
     const time = useRef([]);
 
+    const [selectedDate, setSelectedDate] = useState("");
+
     const [firstTime, setFirstTime] = useState();
     const [secondTime, setSecondTime] = useState();
 
@@ -45,7 +50,11 @@ export default function Horaires() {
     const [heure, setHeure] = useState('09');
     const [minute, setMinute] = useState('00');
 
+    const [showHourList1, setShowHourList1] = useState(false);
+    const [showHourList2, setShowHourList2] = useState(false);
+
     const doDayDate = new Date(); // Date d'aujourd'hui
+    const date = selectedDate.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
     let { reservation } = useParams();
     const [data, setData] = useState([]);
@@ -163,8 +172,7 @@ export default function Horaires() {
     };
 
 
-    const [selectedDate, setSelectedDate] = useState("");
-    console.log("selectedDate", selectedDate);
+    // console.log("selectedDate", selectedDate);
 
     const today = new Date().toISOString().split("T")[0]; // obtenir la date actuelle au format "yyyy-mm-dd"
 
@@ -191,125 +199,157 @@ export default function Horaires() {
 
 
     }
-
-
+ 
     return (
         <div>
-            <p>Horaires page admin</p>
 
+            <p className="title">Horaires page admin</p>
             <div className="createResa">
                 <div>
-                    <form onSubmit={horairesSubmit} >
+                    <form className="createResa__form" onSubmit={horairesSubmit} >
 
-                        <div>
-                            <p onClick={showCalendarFunction}>Ouvrir le calendrier</p>
+                        <div className="createResa__form_calendarGroup">
+                            <FontAwesomeIcon className={`createResa__form_calendarGroup_calendarButton ${showCalendar ? 'activeCalendar' : ''}`} onClick={showCalendarFunction} icon={faCalendar} />
                             {showCalendar && (
-                                <div onClick={(event) => { event.stopPropagation() }}>
+                                <div className="createResa__form_calendarGroup_calendar" onClick={(event) => { event.stopPropagation() }}>
                                     <Calendar value={selectedDate} minDate={doDayDate} onChange={handleDateChange} />
                                 </div>
                             )}
                         </div>
 
-                        <button>Créer la reservation</button>
-                        <div>
-                            <input className="numberInput" onChange={handleChange1} value={value1} ref={firstPlacesRef} placeholder="0" type="number" />
-                            <label >Places pour premier service</label>
+                        <div className="createResa__form_input">
+                            <input className="createResa__form_input_numberInput" onChange={handleChange1} value={value1} ref={firstPlacesRef} placeholder="0" type="number" />
+                            <label className="createResa__form_input_label">Places pour premier service</label>
                         </div>
-                        <div>
-                            <input className="numberInput" onChange={handleChange2} value={value2} ref={secondPlacesRef} placeholder="0" type="number" />
-                            <label >Places pour deuxième service</label>
-                        </div>
-
-                    </form>
-
-
-
-                    <div>
-
-
-                        <div className="">
-
-                            {hoursList1.map(hour => (
-                                <button key={hour} onClick={() => handleHourClick(hour)}>
-                                    {hour}
-                                </button>
-                            ))}
-
+                        <div className="createResa__form_input">
+                            <input className="createResa__form_input_numberInput" onChange={handleChange2} value={value2} ref={secondPlacesRef} placeholder="0" type="number" />
+                            <label className="createResa__form_input_label">Places pour deuxième service</label>
                         </div>
 
-                        <div className="">
+                        <div className="createResa__form_hourSelectGroup">
 
-                            {hoursList2.map(hour => (
-                                <button key={hour} onClick={() => handleHourClick(hour)}>
-                                    {hour},
-                                </button>
-                            ))}
+
+                            <div className="createResa__form_hourSelectGroup_hourPicker">
+                                <p className={`createResa__form_hourSelectGroup_hourPicker_title ${showHourList1 ? 'active' : ''}`} onClick={() => setShowHourList1(!showHourList1)}>Deuxième service
+                                    <span className="createResa__form_hourSelectGroup_hourPicker_title_span">
+                                        <FontAwesomeIcon icon={faClock} />
+                                    </span>
+
+                                </p>
+                                <div className="createResa__form_hourSelectGroup_hourPicker_group">
+                                    {showHourList1 && (
+                                        hoursList1.map(hour => (
+                                            <p className="createResa__form_hourSelectGroup_hourPicker_group_hourButton" key={hour} onClick={() => handleHourClick(hour)}>
+                                                {hour}
+                                            </p>
+                                        ))
+                                    )
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div className="createResa__form_hourSelectGroup_hourPicker">
+                                <p className={`createResa__form_hourSelectGroup_hourPicker_title ${showHourList2 ? 'active' : ''}`} onClick={() => setShowHourList2(!showHourList2)}>
+                                    Premier service
+                                    <span className="createResa__form_hourSelectGroup_hourPicker_title_span">
+                                        <FontAwesomeIcon icon={faClock} />
+                                    </span>
+                                </p>
+                                <div className="createResa__form_hourSelectGroup_hourPicker_group">
+                                    {showHourList2 && (
+                                        hoursList2.map(hour => (
+                                            <p className="createResa__form_hourSelectGroup_hourPicker_group_hourButton " key={hour} onClick={() => handleHourClick(hour)}>
+                                                {hour}
+                                            </p>
+                                        ))
+                                    )
+                                    }
+                                </div>
+
+
+                            </div>
 
 
                         </div>
-
-                        <div>
-                            <select value={heure} onChange={(e) => setHeure(e.target.value)}>
+                        <div className="createResa__form_hourSelect">
+                            <select className="createResa__form_hourSelect_select" value={heure} onChange={(e) => setHeure(e.target.value)}>
                                 {heures.map((h) => (
-                                    <option key={h} value={h}>
+                                    <option className="createResa__form_hourSelect_select_option" key={h} value={h}>
                                         {h}
                                     </option>
                                 ))}
                             </select>
-                            <select value={minute} onChange={(e) => setMinute(e.target.value)}>
+                            <select className="createResa__form_hourSelect_select" value={minute} onChange={(e) => setMinute(e.target.value)}>
                                 {minutes.map((m) => (
-                                    <option key={m} value={m}>
+                                    <option className="createResa__form_hourSelect_select_option" key={m} value={m}>
                                         {m}
                                     </option>
                                 ))}
                             </select>
-                            <button onClick={handleValider}>Valider</button>
-                            <div>{heureMinute}</div>
+                            <p className="createResa__form_hourSelect_button" onClick={handleValider}>Valider</p>
+                            <div className="createResa__form_hourSelect_hourVue">{heureMinute}</div>
                         </div>
 
-                    </div>
+                        <button className="createResa__form_validButton">Créer la reservation</button>
+                    </form>
+
+
+
 
                 </div>
 
-                <div className="createResa__card">
-                    <div className="createResa__card_content">
+                {selectedDate && (
 
-                        <p className="createResa__card_content_title">Premier service</p>
 
-                        <p className="createResa__card_content_hourList">
-                            {firstSelectedHours.map(hour =>
+                    <div className="createResa__card">
+                        <p>{date}</p>
+                        <div className="createResa__card_content">
 
-                            (
-                                <p className="createResa__card_content_hourList_hour" key={hour}>
-                                    {hour},
-                                </p>
-                            ))}
-                        </p>
-                        <p className="createResa__card_content_places"><span className="span">{firstPlaces}</span> places</p>
+                            <p className="createResa__card_content_title">Premier service</p>
 
+                            <p className="createResa__card_content_hourList">
+                                {firstSelectedHours.map(hour =>
+
+                                (
+                                    <p className="createResa__card_content_hourList_hour" key={hour}>
+                                        {hour},
+                                    </p>
+                                ))}
+                            </p>
+                            <p className="createResa__card_content_places"><span className="span">{firstPlaces}</span> places</p>
+
+                        </div>
+                        <div className="underline">
+                            <div className="underline__line"></div>
+                        </div>
+                        <div className="createResa__card_content">
+
+                            <p className="createResa__card_content_title">Deuxième service</p>
+                            <p className="createResa__card_content_hourList">
+                                {secondSelectedHours.map(hour =>
+
+                                (
+                                    <p className="createResa__card_content_hourList_hour" key={hour}>
+                                        {hour},
+                                    </p>
+                                ))}
+                            </p>
+                            <p className="createResa__card_content_places"><span className="span">{secondPlaces}</span> places</p>
+
+
+                        </div>
                     </div>
-                    <div className="underline">
-                        <div className="underline__line"></div>
-                    </div>
-                    <div className="createResa__card_content">
-
-                        <p className="createResa__card_content_title">Deuxième service</p>
-                        <p className="createResa__card_content_hourList">
-                            {secondSelectedHours.map(hour =>
-
-                            (
-                                <p className="createResa__card_content_hourList_hour" key={hour}>
-                                    {hour},
-                                </p>
-                            ))}
-                        </p>
-                        <p className="createResa__card_content_places"><span className="span">{secondPlaces}</span> places</p>
-
-
-                    </div>
-                </div>
+                ) || (
+                        <div className="createResa__card">
+                            <p>carte vide</p>
+                        </div>
+                    )
+                }
             </div>
+
             <div>
+
                 <ResaCard />
             </div>
         </div >

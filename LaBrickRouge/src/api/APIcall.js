@@ -17,6 +17,7 @@ export default function APIProvider(props) {
                 getEvent: API.getEvent,
                 postEvent: API.postEvent,
                 updateHoraire: API.updateHoraire,
+                deletHoraire: API.deletHoraire,
             }}>
             {props.children}
         </APIContext.Provider>
@@ -117,8 +118,8 @@ const API = {
     },
 
     updateHoraire: async (id, data) => {
-        console.log("id", id);
-        console.log("data", data);
+        // console.log("id", id);
+        // console.log("data", data);
         await fetch(`${baseUrl}/horaires/${id}`, {
             method: 'PUT',
             headers: {
@@ -126,6 +127,17 @@ const API = {
             },
             body: JSON.stringify(data)
         });
-    }
+    },
+    deletHoraire: async (id) => {
+        await fetch(`${baseUrl}/horaires/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+    },
+
+
+
 
 }

@@ -22,50 +22,62 @@ router.post('/', (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
-router.put('/:id', async (req, res) => {
-    const horaire = await Horaires.findById(req.params.id);
-    const newFirstAvailablePlaces = horaire.firstAvailablePlaces - req.body.firstAvailablePlaces;
-    const newSecondAvailablePlaces = horaire.secondAvailablePlaces - req.body.secondAvailablePlaces;
-    if (newFirstAvailablePlaces < 0) {
-        try {
-            await horaire.updateOne({
-                $set: {
-                    firstAvailablePlaces: 0,
-                    secondAvailablePlaces: newSecondAvailablePlaces,
-                }
-            }, { new: true });
-            res.status(200).json(horaire);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
-        }
-    } else if (newSecondAvailablePlaces < 0) {
-        try {
-            await horaire.updateOne({
-                $set: {
-                    firstAvailablePlaces: newFirstAvailablePlaces,
-                    secondAvailablePlaces: 0,
-                }
-            }, { new: true });
-            res.status(200).json(horaire);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
-        }
-    } else {
-        try {
-            await horaire.updateOne({
-                $set: {
-                    firstAvailablePlaces: newFirstAvailablePlaces,
-                    secondAvailablePlaces: newSecondAvailablePlaces,
-                }
-            }, { new: true });
-            res.status(200).json(horaire);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
-        }
+// delet a horaire
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const horaire = await Horaires.findById(req.params.id);
+        await horaire.deleteOne();
+        res.status(200).json({ message: 'Horaire deleted !' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-
-
 });
+
+
+router.put('/:id', async (req, res) => {
+    try {
+        const horaire = await Horaires.findById(req.params.id);
+
+        if (req.body.page === 'resaChoice') {
+            let newFirstAvailablePlaces = horaire.firstAvailablePlaces || 0;
+            let newSecondAvailablePlaces = horaire.secondAvailablePlaces || 0;
+
+            newFirstAvailablePlaces -= req.body.firstAvailablePlaces || 0;
+            newSecondAvailablePlaces -= req.body.secondAvailablePlaces || 0;
+
+            newFirstAvailablePlaces = newFirstAvailablePlaces < 0 ? 0 : newFirstAvailablePlaces;
+            newSecondAvailablePlaces = newSecondAvailablePlaces < 0 ? 0 : newSecondAvailablePlaces;
+
+            await horaire.updateOne({
+                $set: {
+                    day: req.body.day,
+                    firstAvailablePlaces: newFirstAvailablePlaces,
+                    secondAvailablePlaces: newSecondAvailablePlaces,
+                    eveningH: req.body.eveningH,
+                    morningH: req.body.morningH,
+                }
+            }, { new: true });
+        } else {
+            await horaire.updateOne({
+                $set: {
+                    day: req.body.day,
+                    firstAvailablePlaces: req.body.firstAvailablePlaces,
+                    secondAvailablePlaces: req.body.secondAvailablePlaces,
+                    eveningH: req.body.eveningH,
+                    morningH: req.body.morningH,
+                }
+            }, { new: true });
+        }
+
+        res.status(200).json(horaire);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
 
 router.get('/', (req, res) => {
 
