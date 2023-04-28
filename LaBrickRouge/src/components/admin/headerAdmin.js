@@ -1,4 +1,4 @@
-import { APIContext } from "../../api/APIcall";
+import { APIContext } from "../../context/APIcall";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function HeaderAdmin() {
 
     }, [resaClient, apiContext])
     const dayDate = new Date()
-    console.log(dayDate);
+    // console.log(dayDate);
     const jour = new Date(dayDate);
     const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 

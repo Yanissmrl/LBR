@@ -99,13 +99,18 @@ const API = {
 
     postReservationAdmin: async (data) => {
 
-        await fetch(`${baseUrl}/horaires`, {
+        return await fetch(`${baseUrl}/horaires`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        });
+        }).then((response) => {
+            if (response) {
+                return response.json();
+            }
+        }
+        );
     },
     postEvent: async (data) => {
         await fetch(`${baseUrl}/news`, {

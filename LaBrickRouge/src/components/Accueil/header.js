@@ -3,7 +3,7 @@ import facebook from '../../assets/facebook.svg';
 import tripad from '../../assets/tripadvisor.svg';
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { APIContext } from "../../api/APIcall";
+import { APIContext } from "../../context/APIcall";
 import { Link } from "react-router-dom";
 
 export default function HeaderAccueil() {

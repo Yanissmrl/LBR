@@ -4,7 +4,7 @@ import Desserts from "../components/Carte/desserts";
 import Entree from "../components/Carte/entree";
 import Boissons from "../components/Carte/boissons";
 import Nav from "../components/nav";
-import APIProvider from "../api/APIcall";
+import APIProvider from "../context/APIcall";
 import Footer from "../components/footer";
 import { useState, } from "react";
 import table from '../assets/table.svg';

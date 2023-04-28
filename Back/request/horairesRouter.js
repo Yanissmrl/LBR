@@ -18,9 +18,26 @@ router.post('/', (req, res) => {
         secondAvailablePlaces: req.body.secondAvailablePlaces,
     });
     horaire.save()
-        .then(() => res.status(201).json({ message: 'Horaire created !' }))
+        .then(horaire => res.status(201).json({ message: 'Horaire created !', data: horaire }))
         .catch(error => res.status(400).json({ error }));
 });
+// router.post('/', (req, res) => {
+//     const horaire = new Horaires({
+//         day: req.body.day,
+//         morningH: req.body.morningH,
+//         eveningH: req.body.eveningH,
+//         firstAvailablePlaces: req.body.firstAvailablePlaces,
+//         secondAvailablePlaces: req.body.secondAvailablePlaces,
+//     });
+
+//     horaire.save()
+//         .then(horaire => {
+//             const response = { message: 'Horaire created!', data: horaire };
+//             console.log('Backend response:', response);
+//             res.status(201).json(response);
+//         })
+//         .catch(error => res.status(400).json({ error }));
+// });
 
 // delet a horaire
 

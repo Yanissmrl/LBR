@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import imagebg from '../../assets/imagebg.jpg';
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { APIContext } from "../../api/APIcall";
+import { APIContext } from "../../context/APIcall";
 
 export default function Evenements() {
     const apiContext = useContext(APIContext);

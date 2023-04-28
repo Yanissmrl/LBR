@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../routes/appContext';
-import { APIContext } from "../api/APIcall";
+import { APIContext } from "../context/APIcall";
 import eyeHide from '../assets/eye-password-hide.svg';
 
 export default function Login() {

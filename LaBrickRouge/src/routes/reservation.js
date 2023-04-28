@@ -1,6 +1,6 @@
 import PageContent from "../components/reservation/pageContent";
 import Nav from "../components/nav";
-import APIProvider from "../api/APIcall";
+import APIProvider from "../context/APIcall";
 import Footer from "../components/footer";
 export default function Reservation() {
 

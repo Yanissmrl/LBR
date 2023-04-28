@@ -4,13 +4,15 @@ import './sass/styles.sass'
 import './reset.css'
 import reportWebVitals from './reportWebVitals';
 import { AppProvider } from './routes/appContext';
-import APIProvider from "./api/APIcall";
-
+import APIProvider from "./context/APIcall";
+import HorairesProvider from "./context/horairesContext";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <APIProvider>
-      <AppProvider />
+      <HorairesProvider>
+        <AppProvider />
+      </HorairesProvider>
     </APIProvider>
   </React.StrictMode>
 );

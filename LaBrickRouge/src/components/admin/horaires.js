@@ -1,11 +1,12 @@
 import { useRef, useContext, useState, useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { APIContext } from "../../api/APIcall";
+import { APIContext } from "../../context/APIcall";
 import ResaCard from "./reservations/resaCard";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
+import { HorairesContext } from "../../context/horairesContext";
 // import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -27,7 +28,7 @@ function generateHoursList(startHour, endHour, interval) {
 
 export default function Horaires() {
 
-
+    const horairesContext = useContext(HorairesContext);
     const apiContext = useContext(APIContext);
     const time = useRef([]);
 
@@ -102,7 +103,6 @@ export default function Horaires() {
     const horairesSubmit = (e) => {
         e.preventDefault();
 
-
         apiContext.postReservationAdmin({
             day: selectedDate,
             morningH: firstTime,
@@ -111,7 +111,8 @@ export default function Horaires() {
             secondAvailablePlaces: secondPlaces
         }).then(res => {
             if (res) {
-                alert("Reservation envoyée");
+                console.log("res", res);
+                horairesContext.setHoraires(res?.data);
             }
         });
 
@@ -199,7 +200,7 @@ export default function Horaires() {
 
 
     }
- 
+
     return (
         <div>
 
