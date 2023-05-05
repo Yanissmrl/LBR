@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faFloppyDisk, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faFloppyDisk, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Loader from '../../loader';
 
 
@@ -30,7 +30,7 @@ export default function EditPlaces(props) {
     const hoursList2 = useMemo(() => generateHoursList(19, 22, 15), []);
 
 
-    console.log("jour", props.dayValue);
+    // console.log("jour", props.dayValue);
 
     function generateHoursList(startHour, endHour, interval) {
         const hoursList = [];
@@ -42,6 +42,12 @@ export default function EditPlaces(props) {
         hoursList.sort();
         return hoursList;
     }
+
+    function deletHour(e) {
+        // console.log("e", e);
+        alert("Voulez vous supprimer cette horaire ?");
+
+    }
     function handleHourClick(hour) {
         if (hoursList1.includes(hour)) {
             setFirstSelectedHours([...firstSelectedHours, hour].sort());
@@ -50,6 +56,7 @@ export default function EditPlaces(props) {
         }
         timeSelect(hour);
     }
+
 
     const timeSelect = (e) => {
         setPopup(true);
@@ -81,6 +88,8 @@ export default function EditPlaces(props) {
 
     }
 
+
+
     const toggleEditable = () => {
         setIsEditable(!isEditable);
     };
@@ -91,10 +100,10 @@ export default function EditPlaces(props) {
         e.preventDefault();
         setLoader(true);
         setIsEditable(!isEditable);
-        const test = new Date
+        // const test = new Date
         props.apiContext.updateHoraire(props.id, {
             page: "editCard",
-            day: test,
+            day: new Date,
             firstAvailablePlaces: firstPlacesRef.current?.value,
             secondAvailablePlaces: secondPlacesRef.current?.value,
             morningH: firstTime ? firstTime : props.morningH,
@@ -129,30 +138,73 @@ export default function EditPlaces(props) {
 
                 {
                     (isEditable) && (popup) ? (
+                        <>
+                            <div className="editHourPopup">
+                                <div className="editHourPopup__all">
+                                    <div className="editHourPopup__all_group">
+                                        <div className="editHourPopup__all_group_buttonsGroup">
+                                            {
+                                                hoursList1.map(hour => (
+                                                    <p className="editHourPopup__all_group_buttonsGroup_button" key={hour} onClick={() => handleHourClick(hour)}>
+                                                        {hour}
+                                                    </p>
+                                                ))
+                                            }
+                                        </div>
+                                        <div className="editHourPopup__all_group_buttonsGroup">
+                                            {
+                                                hoursList2.map(hour => (
+                                                    <p className="editHourPopup__all_group_buttonsGroup_button" key={hour} onClick={() => handleHourClick(hour)}>
+                                                        {hour}
+                                                    </p>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="editHourPopup__all">
+                                        <div className="editHourPopup__all_listHour">
+                                            {firstSelectedHours.map(hour =>
 
-                        <div className="testpopup">
-                            {
-                                hoursList1.map(hour => (
-                                    <p className="createResa__form_hourSelectGroup_hourPicker_group_hourButton" key={hour} onClick={() => handleHourClick(hour)}>
-                                        {hour}
-                                    </p>
-                                ))
-                            }
-                        </div>
+                                            (
+                                                <>
+                                                    <p className="editHourPopup__all_listHour_hour" key={hour}>
+                                                        {hour},
+                                                    </p>
+                                                    <FontAwesomeIcon onClick={deletHour(hour)} className="editHourPopup__all_listHour_icon" icon={faXmark} />
+                                                </>
+                                            ))}
+                                        </div>
+                                        <div className="editHourPopup__all_line"></div>
+                                        <div className="editHourPopup__all_listHour">
+                                            {secondSelectedHours.map(hour =>
 
-
-
+                                            (
+                                                <>
+                                                    <p className="editHourPopup__all_listHour_hour" key={hour}>
+                                                        {hour},
+                                                    </p>
+                                                    <FontAwesomeIcon onClick={deletHour} className="editHourPopup__all_listHour_icon" icon={faXmark} />
+                                                </>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button>valider</button>
+                            </div>
+                        </>
 
                     ) : (
-                        <p></p>
+                        <></>
                     )
                 }
 
 
-                {loader && (
-                    <Loader />
-                )}
-                <p className="resaCard__grid_all_day">{props.date}</p>
+                {
+                    loader && (
+                        <Loader />
+                    )
+                }
+                <p className="resaCard__grid_all_day">{props?.date ? props.date : props.dayValue}</p>
                 <div className="resaCard__grid_all_card">
 
 
@@ -174,7 +226,17 @@ export default function EditPlaces(props) {
                         {/* <button onClick={handleDelete()}></button> */}
                     </div>
                     <div className="resaCard__grid_all_card_content">
-                        <h3 className="resaCard__grid_all_card_content_title">Premier service</h3>
+                        <div>
+                            <h3 className="resaCard__grid_all_card_content_title">Premier service</h3>
+                            {
+                                isEditable ? (
+                                    <FontAwesomeIcon onClick={timeSelect} icon={faTrashCan} />
+                                ) : (
+                                    <>
+                                    </>
+                                )
+                            }
+                        </div>
                         <div className="resaCard__grid_all_card_content_hourList">
                             {isEditable ? (
                                 props.morningH.map((e) => {
@@ -184,9 +246,18 @@ export default function EditPlaces(props) {
                                     return (
                                         <>
 
-                                            <FontAwesomeIcon onClick={timeSelect} icon={faTrashCan} />
 
-
+                                            {
+                                                isEditable ? (
+                                                    <div>
+                                                        <p className="resaCard__grid_all_card_content_hourList_hour">{heureFormat}</p>
+                                                    </div>
+                                                ) : (
+                                                    <p className="resaCard__grid_all_card_content_places">
+                                                        <span className="span">{props.firstPlaces}</span> places disponibles
+                                                    </p>
+                                                )
+                                            }
                                         </>
 
                                     )

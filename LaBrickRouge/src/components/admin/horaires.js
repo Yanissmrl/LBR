@@ -70,8 +70,8 @@ export default function Horaires() {
     const timeSelect = (e) => {
         time.current.push(e)
         // console.log("time", time.current);
-        const firstHour = time.current.filter(item => item >= "12:00" && item <= "13:15");
-        const secondHour = time.current.filter(item => item >= "19:00" && item <= "20:30");
+        const firstHour = time.current.filter(item => item >= "12:00" && item <= "14:45");
+        const secondHour = time.current.filter(item => item >= "19:00" && item <= "23:00");
 
         // transforme les heures du premier service en objet date
         const firstObjetHeure = firstHour.map(hour => {
@@ -98,11 +98,14 @@ export default function Horaires() {
 
     // const test = data
     // console.log("test", test);
+    // console.log("firstTime", firstTime);
+    // console.log("secondTime", secondTime);
     const firstPlaces = firstPlacesRef.current.value
     const secondPlaces = secondPlacesRef.current.value
     const horairesSubmit = (e) => {
         e.preventDefault();
-
+        console.log("firstTime", firstTime);
+        console.log("secondTime", secondTime);
         apiContext.postReservationAdmin({
             day: selectedDate,
             morningH: firstTime,
@@ -111,7 +114,7 @@ export default function Horaires() {
             secondAvailablePlaces: secondPlaces
         }).then(res => {
             if (res) {
-                console.log("res", res);
+                // console.log("res", res);
                 horairesContext.setHoraires(res?.data);
             }
         });
@@ -309,7 +312,7 @@ export default function Horaires() {
 
                             <p className="createResa__card_content_title">Premier service</p>
 
-                            <p className="createResa__card_content_hourList">
+                            <div className="createResa__card_content_hourList">
                                 {firstSelectedHours.map(hour =>
 
                                 (
@@ -317,7 +320,7 @@ export default function Horaires() {
                                         {hour},
                                     </p>
                                 ))}
-                            </p>
+                            </div>
                             <p className="createResa__card_content_places"><span className="span">{firstPlaces}</span> places</p>
 
                         </div>

@@ -41,13 +41,14 @@ export default function ResaCard() {
             <div className="resaCard__grid">
                 {
                     data.map((element, index) => {
-                        // const jour = new Date(element.day);
-                        // const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
+                        const jour = new Date(element.day);
+                        const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
                         return (
                             <>
                                 <EditPlaces
-                                    date={dayValue}
+                                    date={date}
+                                    dayValue={dayValue}
                                     firstPlaces={element.firstAvailablePlaces}
                                     secondPlaces={element.secondAvailablePlaces}
                                     key={index}
@@ -55,11 +56,10 @@ export default function ResaCard() {
                                     eveningH={element.eveningH}
                                     apiContext={apiContext}
                                     id={element._id}
-                                    // dayValue={dayValue}
-                                    // firstPlaceValue={firstPlaceValue}
-                                    // secondPlaceValue={secondPlaceValue}
-                                    // morningHValue={morningHValue}
-                                    // eveningHValue={eveningHValue}
+                                // firstPlaceValue={firstPlaceValue}
+                                // secondPlaceValue={secondPlaceValue}
+                                // morningHValue={morningHValue}
+                                // eveningHValue={eveningHValue}
                                 />
                             </>
 

@@ -1,0 +1,49 @@
+.editHourPopup
+    padding: 1rem
+    border: 1px solid black
+    position: absolute
+    background-color: $light-gray
+    height: fit-content
+    width: 70%
+    border-radius: 5px
+    border: 1px solid $gray
+    &__all
+        display: flex
+        &_group
+            &_buttonsGroup
+                // border: 1px solid blue
+                display: flex
+                flex-wrap: wrap
+                max-width: 50%
+                margin-bottom: 1rem
+                &_button
+                    font-family: 'nunito', sans-serif
+                    font-weight: 600
+                    cursor: pointer
+                    height: 1.5rem
+                    margin: 0.2rem
+                    color: white
+                    background-color: $red
+                    display: flex
+                    align-items: center
+                    border-radius: 3px
+                    padding: 0.2rem
+        &_listHour
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            height: fit-content
+            font-family: 'nunito', sans-serif
+            color: black
+            font-weight: 600
+            margin: 0 10px
+            &_hour
+                margin: 5px
+                cursor: default
+            &_icon
+                color: $red
+                cursor: pointer
+        &_line
+            height: 100%
+            width: 2px
+            border-radius: 5px
+            background-color: black
