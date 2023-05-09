@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import { APIContext } from "../../../context/APIcall";
 import { useParams } from "react-router-dom";
 import EditPlaces from "./editPlaces";
@@ -15,20 +15,14 @@ export default function ResaCard() {
     // state
     const [data, setData] = useState([]);
     const [dayValue, setDayValue] = useState(null);
-    // const [firstPlaceValue, setFirstPlaceValue] = useState(null);
-    // const [secondPlaceValue, setSecondPlaceValue] = useState(null);
-    // const [morningHValue, setMorningHValue] = useState(null);
-    // const [eveningHValue, setEveningHValue] = useState(null);
+    const [hourValue, setHourValue] = useState(null);
 
     useEffect(() => {
         apiContext.getHoraires().then(data => setData(data));
         const jour = new Date(horairesContext?.horaires?.day);
         const date = jour.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
         setDayValue(date);
-        // setFirstPlaceValue(horairesContext?.horaires?.firstAvailablePlaces);
-        // setSecondPlaceValue(horairesContext?.horaires?.secondAvailablePlaces);
-        // setMorningHValue(horairesContext?.horaires?.morningH);
-        // setEveningHValue(horairesContext?.horaires?.eveningH);
+        setHourValue(horairesContext?.horaires?.morningH);
 
     }, [reservation, apiContext, horairesContext])
 
@@ -56,10 +50,6 @@ export default function ResaCard() {
                                     eveningH={element.eveningH}
                                     apiContext={apiContext}
                                     id={element._id}
-                                // firstPlaceValue={firstPlaceValue}
-                                // secondPlaceValue={secondPlaceValue}
-                                // morningHValue={morningHValue}
-                                // eveningHValue={eveningHValue}
                                 />
                             </>
 

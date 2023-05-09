@@ -131,7 +131,12 @@ const API = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        });
+        }).then((response) => {
+            if (response) {
+                return response.json();
+            }
+        }
+        );
     },
     deletHoraire: async (id) => {
         await fetch(`${baseUrl}/horaires/${id}`, {

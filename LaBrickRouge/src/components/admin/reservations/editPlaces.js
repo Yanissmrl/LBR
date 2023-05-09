@@ -1,11 +1,14 @@
-import { useContext, useEffect, useMemo, useState, useRef } from "react";
+import { useMemo, useContext, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faFloppyDisk, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Loader from '../../loader';
+import { HorairesContext } from "../../../context/horairesContext";
 
 
 
 export default function EditPlaces(props) {
+    
+    const horairesContext = useContext(HorairesContext);
 
     // State
     const [isEditable, setIsEditable] = useState(false);
@@ -43,11 +46,8 @@ export default function EditPlaces(props) {
         return hoursList;
     }
 
-    function deletHour(e) {
-        // console.log("e", e);
-        alert("Voulez vous supprimer cette horaire ?");
 
-    }
+
     function handleHourClick(hour) {
         if (hoursList1.includes(hour)) {
             setFirstSelectedHours([...firstSelectedHours, hour].sort());
@@ -62,9 +62,10 @@ export default function EditPlaces(props) {
         setPopup(true);
         time.current.push(e)
         // console.log("time", time.current);
-        const firstHour = time.current.filter(item => item >= "12:00" && item <= "13:15");
-        const secondHour = time.current.filter(item => item >= "19:00" && item <= "20:30");
-
+        const firstHour = time.current.filter(item => item >= "12:00" && item <= "15:00");
+        const secondHour = time.current.filter(item => item >= "19:00" && item <= "23:00");
+        console.log("firstHour", firstHour);
+        console.log("secondHour", secondHour);
         // transforme les heures du premier service en objet date
         const firstObjetHeure = firstHour.map(hour => {
             const [heures, minutes] = hour.split(":");
@@ -95,12 +96,15 @@ export default function EditPlaces(props) {
     };
 
 
+
     // submit
     function handleSubmit(e) {
         e.preventDefault();
         setLoader(true);
         setIsEditable(!isEditable);
         // const test = new Date
+
+
         props.apiContext.updateHoraire(props.id, {
             page: "editCard",
             day: new Date,
@@ -111,7 +115,8 @@ export default function EditPlaces(props) {
         }).then(res => {
             setLoader(false);
             if (res) {
-                alert("Horaire modifié");
+                // console.log("res", res);
+                horairesContext.setHoraires(res?.data);
             }
         });
     }
@@ -134,8 +139,6 @@ export default function EditPlaces(props) {
 
         return (
             <form id={props.id} onSubmit={handleSubmit} action="submit" className="resaCard__grid_all" key={props.key} >
-
-
                 {
                     (isEditable) && (popup) ? (
                         <>
@@ -163,27 +166,32 @@ export default function EditPlaces(props) {
                                     </div>
                                     <div className="editHourPopup__all">
                                         <div className="editHourPopup__all_listHour">
-                                            {firstSelectedHours.map(hour =>
-
-                                            (
+                                            {firstSelectedHours.map(hour => (
                                                 <>
                                                     <p className="editHourPopup__all_listHour_hour" key={hour}>
-                                                        {hour},
+                                                        {hour}
                                                     </p>
-                                                    <FontAwesomeIcon onClick={deletHour(hour)} className="editHourPopup__all_listHour_icon" icon={faXmark} />
+
                                                 </>
                                             ))}
                                         </div>
-                                        <div className="editHourPopup__all_line"></div>
+                                        {
+                                            (firstSelectedHours.length >= 1) && (secondSelectedHours.length >= 1) ? (
+
+                                                <div className="editHourPopup__all_line"></div>
+                                            ) : (
+                                                <></>
+                                            )
+                                        }
                                         <div className="editHourPopup__all_listHour">
                                             {secondSelectedHours.map(hour =>
 
                                             (
                                                 <>
                                                     <p className="editHourPopup__all_listHour_hour" key={hour}>
-                                                        {hour},
+                                                        {hour}
                                                     </p>
-                                                    <FontAwesomeIcon onClick={deletHour} className="editHourPopup__all_listHour_icon" icon={faXmark} />
+
                                                 </>
                                             ))}
                                         </div>
