@@ -7,11 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { HorairesContext } from "../../context/horairesContext";
-// import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-
-// import Calendar from 'react-calendar';
-// import 'react-calendar/dist/Calendar.css';
 
 function generateHoursList(startHour, endHour, interval) {
     const hoursList = [];
@@ -68,8 +64,7 @@ export default function Horaires() {
     }, [reservation, apiContext])
 
     const timeSelect = (e) => {
-        time.current.push(e)
-        // console.log("time", time.current);
+        time.current.push(e);
         const firstHour = time.current.filter(item => item >= "12:00" && item <= "14:45");
         const secondHour = time.current.filter(item => item >= "19:00" && item <= "23:00");
 
@@ -96,16 +91,13 @@ export default function Horaires() {
 
     }
 
-    // const test = data
-    // console.log("test", test);
-    // console.log("firstTime", firstTime);
-    // console.log("secondTime", secondTime);
+
     const firstPlaces = firstPlacesRef.current.value
     const secondPlaces = secondPlacesRef.current.value
     const horairesSubmit = (e) => {
         e.preventDefault();
-        console.log("firstTime", firstTime);
-        console.log("secondTime", secondTime);
+        // console.log("firstTime", firstTime);
+        // console.log("secondTime", secondTime);
         apiContext.postReservationAdmin({
             day: selectedDate,
             morningH: firstTime,
@@ -118,7 +110,15 @@ export default function Horaires() {
                 horairesContext.setHoraires(res?.data);
             }
         });
-
+        setShowHourList1(false);
+        setShowHourList2(false);
+        setValue1("");
+        setValue2("");
+        setSelectedDate("");
+        setFirstTime();
+        setSecondTime();
+        setFirstSelectedHours([]);
+        setSecondSelectedHours([]);
 
 
 
@@ -176,9 +176,8 @@ export default function Horaires() {
     };
 
 
-    // console.log("selectedDate", selectedDate);
 
-    const today = new Date().toISOString().split("T")[0]; // obtenir la date actuelle au format "yyyy-mm-dd"
+    // const today = new Date().toISOString().split("T")[0]; // obtenir la date actuelle au format "yyyy-mm-dd"
 
 
 

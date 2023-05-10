@@ -129,11 +129,9 @@ const API = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        });
-
-        if (response) {
+        }); if (response) {
             const jsonData = await response.json();
-            console.log("jsonData", jsonData);
+            // console.log("jsonData", jsonData);
             return jsonData;
         }
     },

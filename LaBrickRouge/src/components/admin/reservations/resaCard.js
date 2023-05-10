@@ -42,6 +42,7 @@ export default function ResaCard() {
                             <>
                                 <EditPlaces
                                     date={date}
+                                    day={element.day}
                                     dayValue={dayValue}
                                     firstPlaces={element.firstAvailablePlaces}
                                     secondPlaces={element.secondAvailablePlaces}

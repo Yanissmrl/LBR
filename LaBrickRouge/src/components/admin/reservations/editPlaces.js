@@ -1,6 +1,6 @@
 import { useMemo, useContext, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faFloppyDisk, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faFloppyDisk, faTrashCan, faArrowRotateLeft, faPaintbrush } from "@fortawesome/free-solid-svg-icons";
 import Loader from '../../loader';
 import { HorairesContext } from "../../../context/horairesContext";
 
@@ -14,8 +14,8 @@ export default function EditPlaces(props) {
     const [isEditable, setIsEditable] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
     const [loader, setLoader] = useState(false);
-    const [firstTime, setFirstTime] = useState();
-    const [secondTime, setSecondTime] = useState();
+    const [firstTime, setFirstTime] = useState([]);
+    const [secondTime, setSecondTime] = useState([]);
     const [firstSelectedHours, setFirstSelectedHours] = useState([]);
     const [secondSelectedHours, setSecondSelectedHours] = useState([]);
     const [popup, setPopup] = useState(false);
@@ -86,7 +86,6 @@ export default function EditPlaces(props) {
             return secondObjetHeure;
         });
         setSecondTime(secondObjetHeure);
-
     }
 
 
@@ -102,25 +101,28 @@ export default function EditPlaces(props) {
         e.preventDefault();
         setLoader(true);
         setIsEditable(!isEditable);
-        // const test = new Date
 
-
+        console.log("firstTime", firstTime);
+        console.log("secondTime", secondTime);
         props.apiContext.updateHoraire(props.id, {
             page: "editCard",
-            day: new Date,
+            day: props.day,
             firstAvailablePlaces: firstPlacesRef.current?.value,
             secondAvailablePlaces: secondPlacesRef.current?.value,
-            morningH: firstTime ? firstTime : props.morningH,
-            eveningH: secondTime ? secondTime : props.eveningH,
+            morningH: firstTime.length > 0 ? firstTime : props.morningH,
+            eveningH: secondTime.length > 0 ? secondTime : props.eveningH,
         }).then(res => {
-            console.log("res");
-            console.log("res avant ", res);
             setLoader(false);
             if (res) {
-                console.log("res apres", res);
+                // console.log("res apres", res);
                 horairesContext.setHoraires(res?.data);
             }
+            setPopup(false);
+            setFirstSelectedHours([]);
+            setSecondSelectedHours([]);
+            time.current = [];
         });
+
     }
 
     // delete
@@ -134,6 +136,12 @@ export default function EditPlaces(props) {
         }
         )
 
+    }
+    function test() {
+
+        setFirstSelectedHours([]);
+        setSecondSelectedHours([]);
+        time.current = [];
     }
 
 
@@ -166,7 +174,14 @@ export default function EditPlaces(props) {
                                             }
                                         </div>
                                     </div>
-                                    <div className="editHourPopup__all">
+                                    <div className="editHourPopup__all"> {
+                                        (firstSelectedHours.length >= 1) || (secondSelectedHours.length >= 1) ? (
+                                            <FontAwesomeIcon className="editHourPopup__all_reset" onClick={test} icon={faArrowRotateLeft} />
+
+                                        ) : (
+                                            <></>
+                                        )
+                                    }
                                         <div className="editHourPopup__all_listHour">
                                             {firstSelectedHours.map(hour => (
                                                 <>
@@ -193,7 +208,6 @@ export default function EditPlaces(props) {
                                                     <p className="editHourPopup__all_listHour_hour" key={hour}>
                                                         {hour}
                                                     </p>
-
                                                 </>
                                             ))}
                                         </div>
@@ -208,64 +222,57 @@ export default function EditPlaces(props) {
                     )
                 }
 
-
                 {
                     loader && (
                         <Loader />
                     )
                 }
+
                 <p className="resaCard__grid_all_day">{props?.date ? props.date : props.dayValue}</p>
                 <div className="resaCard__grid_all_card">
 
+                    <div className="resaCard__grid_all_card_buttons">
+                        {
+                            isEditable ? (
+                                <>
+                                    <button className="resaCard__grid_all_card_buttons_submitButton" type="submit">
+                                        <FontAwesomeIcon icon={faFloppyDisk} />
+                                    </button>
 
-                    {
-                        isEditable ? (
-                            <>
-                                <button type="submit">
-                                    <FontAwesomeIcon icon={faFloppyDisk} />
-                                </button>
-
-                                <FontAwesomeIcon onClick={deletCard} icon={faTrashCan} />
-                            </>
-                        ) : (
-                            <FontAwesomeIcon onClick={toggleEditable} icon={faPenToSquare} />
-                        )
-                    }
-
-                    <div>
-                        {/* <button onClick={handleDelete()}></button> */}
+                                    <FontAwesomeIcon className="resaCard__grid_all_card_buttons_deletButton" onClick={deletCard} icon={faTrashCan} />
+                                </>
+                            ) : (
+                                <FontAwesomeIcon className="resaCard__grid_all_card_buttons_editButton" onClick={toggleEditable} icon={faPenToSquare} />
+                            )
+                        }
                     </div>
                     <div className="resaCard__grid_all_card_content">
-                        <div>
-                            <h3 className="resaCard__grid_all_card_content_title">Premier service</h3>
+                        <div className="resaCard__grid_all_card_content_editHourButton">
                             {
-                                isEditable ? (
-                                    <FontAwesomeIcon onClick={timeSelect} icon={faTrashCan} />
-                                ) : (
+                                isEditable && (
                                     <>
+                                        <p className="resaCard__grid_all_card_content_editHourButton_button" onClick={timeSelect} >
+                                            Modifier les heures
+                                            <FontAwesomeIcon className="resaCard__grid_all_card_content_editHourButton_button_icon" icon={faPaintbrush} />
+                                        </p>
                                     </>
                                 )
                             }
+                            <h3 className="resaCard__grid_all_card_content_title">Premier service</h3>
                         </div>
                         <div className="resaCard__grid_all_card_content_hourList">
                             {isEditable ? (
                                 props.morningH.map((e) => {
                                     const heure = new Date(e);
                                     const heureFormat = heure.toLocaleString("fr-FR", { hour: "numeric", minute: "numeric" });
-                                    const i = props.morningH.indexOf(e);
+                                    // const i = props.morningH.indexOf(e);
                                     return (
                                         <>
-
-
                                             {
-                                                isEditable ? (
+                                                isEditable && (
                                                     <div>
                                                         <p className="resaCard__grid_all_card_content_hourList_hour">{heureFormat}</p>
                                                     </div>
-                                                ) : (
-                                                    <p className="resaCard__grid_all_card_content_places">
-                                                        <span className="span">{props.firstPlaces}</span> places disponibles
-                                                    </p>
                                                 )
                                             }
                                         </>
@@ -289,13 +296,14 @@ export default function EditPlaces(props) {
                         {
                             isEditable ? (
                                 <input
+                                    className="resaCard__grid_all_card_content_placesInput"
                                     type="text"
                                     defaultValue={props.firstPlaces}
                                     ref={firstPlacesRef}
                                 />
                             ) : (
                                 <p className="resaCard__grid_all_card_content_places">
-                                    <span className="span">{props.firstPlaces}</span> places disponibles
+                                    <span className="resaCard__grid_all_card_content_places_span">{props.firstPlaces}</span> places disponibles
                                 </p>
                             )
                         }
@@ -313,12 +321,15 @@ export default function EditPlaces(props) {
                                     const heure = new Date(e);
                                     const heureFormat = heure.toLocaleString("fr-FR", { hour: "numeric", minute: "numeric" });
                                     return (
-                                        <input
-                                            type="text"
-                                            defaultValue={heureFormat}
-                                            ref={eveningHRef}
-                                            onChange={(e) => timeSelect(e.target.value)}
-                                        />
+                                        <>
+                                            {
+                                                isEditable && (
+                                                    <div>
+                                                        <p className="resaCard__grid_all_card_content_hourList_hour">{heureFormat}</p>
+                                                    </div>
+                                                )
+                                            }
+                                        </>
 
                                     )
                                 })
@@ -340,13 +351,14 @@ export default function EditPlaces(props) {
                             isEditable ? (
                                 <>
                                     <input type="text"
+                                        className="resaCard__grid_all_card_content_placesInput"
                                         defaultValue={props.secondPlaces}
                                         ref={secondPlacesRef}
                                     />
                                 </>
                             ) : (
 
-                                <p className="resaCard__grid_all_card_content_places"><span className="span">{props.secondPlaces}</span> places disponibles</p>
+                                <p className="resaCard__grid_all_card_content_places"><span className="resaCard__grid_all_card_content_places_span">{props.secondPlaces}</span> places disponibles</p>
 
                             )
 
