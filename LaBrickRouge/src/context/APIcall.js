@@ -123,20 +123,19 @@ const API = {
     },
 
     updateHoraire: async (id, data) => {
-        // console.log("id", id);
-        // console.log("data", data);
-        await fetch(`${baseUrl}/horaires/${id}`, {
+        const response = await fetch(`${baseUrl}/horaires/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then((response) => {
-            if (response) {
-                return response.json();
-            }
+        });
+
+        if (response) {
+            const jsonData = await response.json();
+            console.log("jsonData", jsonData);
+            return jsonData;
         }
-        );
     },
     deletHoraire: async (id) => {
         await fetch(`${baseUrl}/horaires/${id}`, {

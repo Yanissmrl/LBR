@@ -84,10 +84,16 @@ router.put('/:id', async (req, res) => {
                     eveningH: req.body.eveningH,
                     morningH: req.body.morningH,
                 }
-            }, { new: true });
+            }, {
+                new: true
+            });
+            const newHoraire = await Horaires.findById(req.params.id);
+            if (newHoraire) {
+                console.log('newHoraire', newHoraire);
+                return res.status(200).json({ data: newHoraire });
+            }
         }
-
-        res.status(200).json(horaire);
+        res.status(200).json({ horaire: horaire });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

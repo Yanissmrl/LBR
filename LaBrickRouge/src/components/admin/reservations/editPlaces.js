@@ -7,7 +7,7 @@ import { HorairesContext } from "../../../context/horairesContext";
 
 
 export default function EditPlaces(props) {
-    
+
     const horairesContext = useContext(HorairesContext);
 
     // State
@@ -113,9 +113,11 @@ export default function EditPlaces(props) {
             morningH: firstTime ? firstTime : props.morningH,
             eveningH: secondTime ? secondTime : props.eveningH,
         }).then(res => {
+            console.log("res");
+            console.log("res avant ", res);
             setLoader(false);
             if (res) {
-                // console.log("res", res);
+                console.log("res apres", res);
                 horairesContext.setHoraires(res?.data);
             }
         });
