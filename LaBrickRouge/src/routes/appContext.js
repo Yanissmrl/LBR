@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import App from '../App';
 import HeaderCarte from '../routes/Carte';
 import Reservation from '../routes/reservation';
@@ -13,6 +13,8 @@ export const AppContext = createContext(null)
 
 export function AppProvider() {
   const [user, setUser] = useState({ loggedIn: true })
+
+
 
   const router = createBrowserRouter([
     {

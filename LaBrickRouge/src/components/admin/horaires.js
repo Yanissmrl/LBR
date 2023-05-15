@@ -50,6 +50,8 @@ export default function Horaires() {
     const [showHourList1, setShowHourList1] = useState(false);
     const [showHourList2, setShowHourList2] = useState(false);
 
+
+
     const doDayDate = new Date(); // Date d'aujourd'hui
     const date = selectedDate.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
@@ -106,10 +108,15 @@ export default function Horaires() {
             secondAvailablePlaces: secondPlaces
         }).then(res => {
             if (res) {
-                // console.log("res", res);
+                horairesContext.setShowPopup(true);
+                setTimeout(() => {
+                    horairesContext.setShowPopup(false);
+                    console.log("test horaires", horairesContext.showPopup);
+                }, 3000);
                 horairesContext.setHoraires(res?.data);
             }
         });
+
         setShowHourList1(false);
         setShowHourList2(false);
         setValue1("");
@@ -119,8 +126,6 @@ export default function Horaires() {
         setSecondTime();
         setFirstSelectedHours([]);
         setSecondSelectedHours([]);
-
-
 
     }
 
@@ -176,11 +181,6 @@ export default function Horaires() {
     };
 
 
-
-    // const today = new Date().toISOString().split("T")[0]; // obtenir la date actuelle au format "yyyy-mm-dd"
-
-
-
     const [showCalendar, setShowCalendar] = useState(false);
 
     const showCalendarFunction = () => {
@@ -202,6 +202,9 @@ export default function Horaires() {
 
 
     }
+
+
+
 
     return (
         <div>
@@ -302,7 +305,7 @@ export default function Horaires() {
 
                 </div>
 
-                {selectedDate && (
+                {selectedDate ? (
 
 
                     <div className="createResa__card">
@@ -343,11 +346,11 @@ export default function Horaires() {
 
                         </div>
                     </div>
-                ) || (
-                        <div className="createResa__card">
-                            <p>carte vide</p>
-                        </div>
-                    )
+                ) : (
+                    <div className="createResa__card">
+                        <p>carte vide</p>
+                    </div>
+                )
                 }
             </div>
 

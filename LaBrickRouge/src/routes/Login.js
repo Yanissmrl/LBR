@@ -14,31 +14,43 @@ export default function Login() {
     const [currentData, setData] = useState([]);
     const [erreur, setErreur] = useState('');
 
-    useEffect(() => {
-        apiContext.getUser().then(data => {
-            if (data[0]) {
-                userData.current = data[0];
+    // useEffect(() => {
+    //     // apiContext.getUser().then(data => {
+    //     //     if (data[0]) {
+    //     //         userData.current = data[0];
 
-                setData(userData.current)
-            }
-        });
-    }, [user, apiContext])
+    //     //         setData(userData.current)
+    //     //     }
+    //     // });
+
+
+    // }, [user, apiContext])
 
     const loginSubmit = (e) => {
-        if (currentData.loginId === e.target[0].value && currentData.password === e.target[1].value) {
 
-            e.preventDefault();
-            appContext.setUser({
-                ...appContext.user,
-                loggedIn: true
-            })
-            navigate('/admin');
-        } else {
-            e.preventDefault();
-            e.target[0].value = '';
-            e.target[1].value = '';
-            setErreur('Identifiants ou mot de passe incorrect !')
-        }
+        apiContext.getUser({
+            loginId: 'yaniss',
+            password: 'admin'
+        }).then(res => {
+            // setLoader(false);
+            if (res) {
+                alert("Reservation envoyée");
+            }
+        });
+        // if (currentData.loginId === e.target[0].value && currentData.password === e.target[1].value) {
+
+        //     e.preventDefault();
+        //     appContext.setUser({
+        //         ...appContext.user,
+        //         loggedIn: true
+        //     })
+        //     navigate('/admin');
+        // } else {
+        //     e.preventDefault();
+        //     e.target[0].value = '';
+        //     e.target[1].value = '';
+        //     setErreur('Identifiants ou mot de passe incorrect !')
+        // }
     }
 
     const oeil = (e) => {
@@ -80,5 +92,4 @@ export default function Login() {
         <></>
     }
 }
-
 
