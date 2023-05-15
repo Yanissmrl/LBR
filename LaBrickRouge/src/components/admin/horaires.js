@@ -293,8 +293,8 @@ export default function Horaires() {
                                     </option>
                                 ))}
                             </select>
-                            <p className="createResa__form_hourSelect_button" onClick={handleValider}>Valider</p>
                             <div className="createResa__form_hourSelect_hourVue">{heureMinute}</div>
+                            <p className="createResa__form_hourSelect_button" onClick={handleValider}>Valider la selection</p>
                         </div>
 
                         <button className="createResa__form_validButton">Créer la reservation</button>

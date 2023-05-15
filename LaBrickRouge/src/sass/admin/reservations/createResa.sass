@@ -75,10 +75,22 @@
                         &:hover
                             background-color: #d2d2d2
         &_hourSelect
+            font-family: 'nunito', sans-serif
             border: 1px solid green
             &_select
                 &_option
             &_button
+                border-radius: 3px
+                font-weight: 600
+                background-color: $gray
+                width: fit-content
+                padding: 3px
+                cursor: pointer
+                &:hover
+                    // transition-delay: 0.07s
+                    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75)
+                    color: white
+
             &_hourVue
         &_validButton
 .active
