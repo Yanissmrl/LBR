@@ -19,8 +19,8 @@ export default function AdminAccueil() {
         <div>
             <Nav></Nav>
             <section className='container'>
+                <PopupTemporaire />
                 <div className='adminPages'>
-                    <PopupTemporaire />
                     <div className='adminNav'>
                         <ul className='adminNav__ul'>
                             <div className='adminNav__ul_links'>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { HorairesContext } from "../context/horairesContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareCheck, faBell } from "@fortawesome/free-solid-svg-icons";
 
 export default function PopupTemporaire() {
     const horairesContext = useContext(HorairesContext);
@@ -18,9 +20,15 @@ export default function PopupTemporaire() {
 
     if (show) {
         return (
-            <p>
-                C'est un message temporaire!
-            </p>
+            <div className='confirmPopup'>
+                <FontAwesomeIcon className='confirmPopup__notifIcon' icon={faBell} />
+                <div className='confirmPopup__message'>
+                    <p className='confirmPopup__message_p'>
+                        Réservation crée
+                    </p>
+                    <FontAwesomeIcon className='confirmPopup__message_icon' icon={faSquareCheck} />
+                </div>
+            </div>
         );
     }
     return null;

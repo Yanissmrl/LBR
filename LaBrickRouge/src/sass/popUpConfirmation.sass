@@ -1,0 +1,57 @@
+.confirmPopup
+    position: absolute
+    // right: -10rem
+    right: 0
+    width: 10rem auto
+    height: 10rem auto
+    animation: deplacement 0.5s ease-in-out forwards, retour 0.5s ease-in-out 2.6s forwards
+    background-color: $gray
+    border-top-left-radius: 5px
+    border-bottom-left-radius: 5px
+    padding: 1rem
+    &__notifIcon
+        height: 2rem
+        position: absolute
+        top: -20%
+        left: -8%
+        animation: shake 1s
+        animation-delay: 0.5s
+    &__message
+        display: flex
+        &_p
+            color: white
+            font-weight: 600
+            font-family: 'nunito', sans-serif
+            margin-right: 5px
+        &_icon
+            color: $green
+
+@keyframes deplacement
+    from
+        right: -10rem
+    to
+        right: 0
+
+@keyframes retour
+    from
+        right: 0
+    to
+        right: -10rem
+
+@keyframes shake
+    0%
+        transform: rotate(0deg)
+        color: $blueEdit
+
+    25%
+        transform: rotate(-10deg)
+
+    50%
+        transform: rotate(10deg)
+
+    75%
+        transform: rotate(-10deg)
+
+    100%
+        transform: rotate(0deg)
+        color: $blueEdit
