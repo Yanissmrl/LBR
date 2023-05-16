@@ -51,7 +51,6 @@ export default function Horaires() {
     const [showHourList2, setShowHourList2] = useState(false);
 
 
-
     const doDayDate = new Date(); // Date d'aujourd'hui
     const date = selectedDate.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "numeric" });
 
@@ -100,32 +99,58 @@ export default function Horaires() {
         e.preventDefault();
         // console.log("firstTime", firstTime);
         // console.log("secondTime", secondTime);
-        apiContext.postReservationAdmin({
-            day: selectedDate,
+        const test = {
             morningH: firstTime,
             eveningH: secondTime,
             firstAvailablePlaces: firstPlaces,
             secondAvailablePlaces: secondPlaces
-        }).then(res => {
-            if (res) {
-                horairesContext.setShowPopup(true);
-                setTimeout(() => {
-                    horairesContext.setShowPopup(false);
-                    console.log("test horaires", horairesContext.showPopup);
-                }, 3000);
-                horairesContext.setHoraires(res?.data);
-            }
-        });
+        };
 
-        setShowHourList1(false);
-        setShowHourList2(false);
-        setValue1("");
-        setValue2("");
-        setSelectedDate("");
-        setFirstTime();
-        setSecondTime();
-        setFirstSelectedHours([]);
-        setSecondSelectedHours([]);
+        const values = Object.values(test);
+        const isEmpty = values.some(value => value === undefined || value === null || value === '');
+        // console.log("test1", test);
+
+        if (!isEmpty) {
+            console.log("ok", test);
+
+            apiContext.postReservationAdmin({
+                day: selectedDate,
+                morningH: firstTime,
+                eveningH: secondTime,
+                firstAvailablePlaces: firstPlaces,
+                secondAvailablePlaces: secondPlaces
+            }).then(res => {
+                if (res) {
+                    horairesContext.setActionPage('horaires de reservation crée');
+                    horairesContext.setShowPopup(true);
+                    setTimeout(() => {
+                        horairesContext.setShowPopup(false);
+                        console.log("test horaires", horairesContext.showPopup);
+                    }, 3000);
+                    horairesContext.setHoraires(res?.data);
+                }
+            });
+
+            setShowHourList1(false);
+            setShowHourList2(false);
+            setValue1("");
+            setValue2("");
+            setSelectedDate("");
+            setFirstTime();
+            setSecondTime();
+            setFirstSelectedHours([]);
+            setSecondSelectedHours([]);
+
+        } else {
+            console.log("pas ok", test);
+            horairesContext.setActionPage('error');
+            horairesContext.setShowPopup(true);
+            setTimeout(() => {
+                horairesContext.setShowPopup(false);
+                console.log("test horaires", horairesContext.showPopup);
+            }, 3000);
+        }
+
 
     }
 

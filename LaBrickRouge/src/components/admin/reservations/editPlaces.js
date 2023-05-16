@@ -116,6 +116,12 @@ export default function EditPlaces(props) {
             if (res) {
                 // console.log("res apres", res);
                 horairesContext.setHoraires(res?.data);
+                horairesContext.setActionPage('Reservation modifiée');
+                horairesContext.setShowPopup(true);
+                setTimeout(() => {
+                    horairesContext.setShowPopup(false);
+                    console.log("test horaires", horairesContext.showPopup);
+                }, 3000);
             }
             setPopup(false);
             setFirstSelectedHours([]);

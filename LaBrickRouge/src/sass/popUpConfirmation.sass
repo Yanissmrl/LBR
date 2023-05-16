@@ -9,13 +9,20 @@
     border-top-left-radius: 5px
     border-bottom-left-radius: 5px
     padding: 1rem
-    &__notifIcon
+    &__notifIconNotOk
         height: 2rem
         position: absolute
         top: -20%
         left: -8%
-        animation: shake 1s
         animation-delay: 0.5s
+        animation: shakeRed 1s
+    &__notifIconOk
+        height: 2rem
+        position: absolute
+        top: -20%
+        left: -8%
+        animation-delay: 0.5s
+        animation: shakeBlue 1s
     &__message
         display: flex
         &_p
@@ -23,9 +30,10 @@
             font-weight: 600
             font-family: 'nunito', sans-serif
             margin-right: 5px
-        &_icon
+        &_iconNotOk
+            color: $red
+        &_iconOk
             color: $green
-
 @keyframes deplacement
     from
         right: -10rem
@@ -38,7 +46,7 @@
     to
         right: -10rem
 
-@keyframes shake
+@keyframes shakeBlue
     0%
         transform: rotate(0deg)
         color: $blueEdit
@@ -55,3 +63,21 @@
     100%
         transform: rotate(0deg)
         color: $blueEdit
+
+@keyframes shakeRed
+    0%
+        transform: rotate(0deg)
+        color: $red
+
+    25%
+        transform: rotate(-10deg)
+
+    50%
+        transform: rotate(10deg)
+
+    75%
+        transform: rotate(-10deg)
+
+    100%
+        transform: rotate(0deg)
+        color: $red
