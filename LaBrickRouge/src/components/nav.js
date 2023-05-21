@@ -1,20 +1,16 @@
 import logo from '../assets/logo.svg';
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import { AppContext } from '../routes/appContext';
 export default function Nav() {
 
     const appContext = useContext(AppContext);
-
-    const element = (function adminRoot() {
-        if (appContext.user === true) {
-            return <Link to='/admin'>Admin</Link>
-        }
-    })();
+    const [param, setParam] = useState(window.location.pathname);
 
     const handleLogout = () => {
         appContext.setUser(false);
         localStorage.removeItem('token');
+        Navigate('/');
     }
 
     return (
@@ -23,13 +19,22 @@ export default function Nav() {
                 <div className='nav-bg__nav'>
                     <Link to='/'><img className='nav-bg__nav_logo' src={logo} alt="Logo la Brick Rouge" /></Link>
                     <ul className='nav-bg__nav_ul'>
-                        <Link className='nav-bg__nav_ul_link' to='/'>Accueil</Link>
-                        <Link className='nav-bg__nav_ul_link' to='/carte'>La carte</Link>
-                        <Link className='nav-bg__nav_ul_link' to='/reservation'>Resa</Link>
-                        <Link className='nav-bg__nav_ul_link' to='/evenements'>Event</Link>
+                        <Link className={`${param === '/' ? 'nav-bg__nav_ul_active' : 'nav-bg__nav_ul_link'}`} to='/'>Accueil</Link>
+                        <Link className={`${param === '/carte' ? 'nav-bg__nav_ul_active' : 'nav-bg__nav_ul_link'}`} to='/carte'>La carte</Link>
+                        <Link className={`${param === '/reservation' ? 'nav-bg__nav_ul_active' : 'nav-bg__nav_ul_link'}`} to='/reservation'>Reservation</Link>
+                        <Link className={`${param === '/evenements' ? 'nav-bg__nav_ul_active' : 'nav-bg__nav_ul_link'}`} to='/evenements'>Event</Link>
                     </ul>
-                    {element}
-                    <Link onClick={() => handleLogout()}>Logout</Link>
+                    {
+                        appContext.user &&
+                        (
+                            <>
+                                <div className='nav-bg__nav_loginGroup'>
+                                    <Link className='nav-bg__nav_loginGroup_adminButton' to='/admin'>Admin</Link>
+                                    <Link className='nav-bg__nav_loginGroup_logout' onClick={() => handleLogout()}>Déconnexion</Link>
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </nav>

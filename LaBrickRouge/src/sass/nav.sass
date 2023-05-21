@@ -12,6 +12,7 @@
     &__nav
         display: flex
         align-items: center
+        justify-content: space-between
         &_logo
             height: 5rem
         &_ul
@@ -22,3 +23,22 @@
                 font-size: 1.2rem
                 margin-right: 2rem
                 text-decoration: none
+                &:hover
+                    color: $red
+            &_active
+                text-decoration: none
+                color: $red
+                font-size: 1.2rem
+                margin-right: 2rem
+        &_loginGroup
+            &_adminButton
+                margin-right: 1rem
+                text-decoration: none
+                color: $red
+                &:hover
+                    text-decoration: underline
+            &_logout
+                text-decoration: none
+                color: #000
+                &:hover
+                    text-decoration: underline
