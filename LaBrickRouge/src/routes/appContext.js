@@ -1,6 +1,7 @@
 import { createContext } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { APIContext } from "../context/APIcall";
 import App from '../App';
 import HeaderCarte from '../routes/Carte';
 import Reservation from '../routes/reservation';
@@ -12,9 +13,31 @@ import Login from '../routes/Login';
 export const AppContext = createContext(null)
 
 export function AppProvider() {
-  const [user, setUser] = useState({ loggedIn: true })
+  const [user, setUser] = useState(false)
+  const apiContext = useContext(APIContext);
+  const appContext = useContext(AppContext);
+
+  const [data, setData] = useState([]);
 
 
+
+  const token = localStorage.getItem('token')
+
+  useEffect(() => {
+
+    if (token) {
+      apiContext.postUser(null, null, token).then(data => {
+        console.log("data", data);
+      });
+      if (data) {
+        setUser(true)
+        // navigate('/admin')
+
+      }
+    }
+
+
+  }, [])
 
   const router = createBrowserRouter([
     {
@@ -41,12 +64,12 @@ export function AppProvider() {
     },
     {
       path: '/admin',
-      element: user.loggedIn ? (<AdminAccueil />) : (<Login />)
+      element: user ? <AdminAccueil /> : <Login />
 
     },
     {
       path: '/admin/reservation',
-      element: user.loggedIn ? (<Horaires />) : (<Login />)
+      element: user ? (<Horaires />) : (<Login />)
 
     },
 

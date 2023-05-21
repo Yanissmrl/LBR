@@ -4,58 +4,44 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
+const { get } = require('mongoose');
 
 router.use(cors());
 router.use(express.json());
 
 // Route de connexion de l'administrateur
-router.post('/login', async (req, res) => {
-    const { loginId, password } = req.body;
+const ash = 'Yaniss12341';
 
-    try {
-        // Vérifier si l'administrateur existe dans la base de données
-        const admin = await User.findOne({ loginId });
+router.post('/', (req, res) => {
+    console.log(req.body.userName, req.body.password);
+    const id = jwt.decode(req.body.token, ash)?.user?._id;
 
-        if (!admin) {
-            return res.status(404).json({ message: "L'administrateur n'existe pas." });
-        }
+    if (id) {
 
-        // Vérifier si le mot de passe est correct
-        const isPasswordCorrect = await bcrypt.compare(password, admin.password);
-
-        if (!isPasswordCorrect) {
-            return res.status(400).json({ message: 'Mot de passe incorrect.' });
-        }
-
-        // Générer un jeton d'accès
-        const token = jwt.sign({ loginId: admin.loginId, id: admin._id }, 'secret', {
-            expiresIn: '1h',
+        const user = User.findOne({ _id: id }).then(user => {
+            console.log('token');
+            res.json(true);
         });
 
-        // Retourner le jeton au client
-        res.status(200).json({ token });
-    } catch (error) {
-        res.status(500).json({ message: 'Une erreur est survenue lors de la connexion.' });
-    }
-});
-// router.post('/', (req, res) => {
-//     const user = new User({
-//         loginId: req.body.loginId,
-//         password: req.body.password
-//     });
-//     user.save()
-//         .then(() => res.status(201).json({ message: 'User created !' }))
-//         .catch(error => res.status(400).json({ error }));
-// });
+    } else if (!id && req.body.userName && req.body.password) {
 
-// get user by name
-router.get('/:loginId', (req, res) => {
-    console.log(req.params.loginId);
-    
-    User.findOne({ loginId: req.params.loginId })
-        .then(user => res.status(200).json(user))
-        .catch(error => res.status(404).json({ error }));
+        const user = User.findOne({ loginId: req.body.userName, password: req.body.password })
+            .then(user => {
+                if (user?._id) {
+                    console.log(user.id);
+                    const token = jwt.sign(
+                        { user: { _id: user._id } },
+                        ash,
+                    );
+                    console.log('pas token');
+                    res.json({ token });
+                    console.log(token);
+                }
+            });
+    }
+
 });
+
 
 
 module.exports = router;

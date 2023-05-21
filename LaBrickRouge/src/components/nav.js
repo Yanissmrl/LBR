@@ -7,10 +7,16 @@ export default function Nav() {
     const appContext = useContext(AppContext);
 
     const element = (function adminRoot() {
-        if (appContext.user.loggedIn === true) {
+        if (appContext.user === true) {
             return <Link to='/admin'>Admin</Link>
         }
     })();
+
+    const handleLogout = () => {
+        appContext.setUser(false);
+        localStorage.removeItem('token');
+    }
+
     return (
         <nav className='nav-bg'>
             <div className='container'>
@@ -23,6 +29,7 @@ export default function Nav() {
                         <Link className='nav-bg__nav_ul_link' to='/evenements'>Event</Link>
                     </ul>
                     {element}
+                    <Link onClick={() => handleLogout()}>Logout</Link>
                 </div>
             </div>
         </nav>

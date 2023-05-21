@@ -11,7 +11,7 @@ export default function APIProvider(props) {
                 getHoraires: API.getHoraires,
                 postReservation: API.postReservation,
                 postReservationAdmin: API.postReservationAdmin,
-                getUser: API.getUser,
+                postUser: API.postUser,
                 getResaClient: API.getResaClient,
                 getPlats: API.getPlats,
                 getEvent: API.getEvent,
@@ -76,16 +76,6 @@ const API = {
         return data
     },
 
-    getUser: async () => {
-        let header = {
-            method: 'GET',
-        }
-        const response = await fetch(`${baseUrl}/user`, header)
-        const data = await response.json()
-        return data
-    },
-
-
     postReservation: async (data) => {
 
         await fetch(`${baseUrl}/resaClient`, {
@@ -121,7 +111,24 @@ const API = {
             body: JSON.stringify(data)
         });
     },
+    postUser: async (userName, password, token) => {
+        const header = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userName, password, token })
+        }
+        const response = await fetch(`${baseUrl}/user`, header)
 
+        const data = await response.json()
+        console.log("data", data);
+        if (data?.token) {
+            localStorage.setItem('token', data.token)
+        }
+        return data
+
+    },
     updateHoraire: async (id, data) => {
         const response = await fetch(`${baseUrl}/horaires/${id}`, {
             method: 'PUT',
