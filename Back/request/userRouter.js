@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
 const { get } = require('mongoose');
+const argon2 = require('argon2');
 
 router.use(cors());
 router.use(express.json());
@@ -13,31 +14,34 @@ router.use(express.json());
 const ash = 'Yaniss12341';
 
 router.post('/', (req, res) => {
-    console.log(req.body.userName, req.body.password);
+    // console.log(req.body.userName, req.body.password);
     const id = jwt.decode(req.body.token, ash)?.user?._id;
 
     if (id) {
 
         const user = User.findOne({ _id: id }).then(user => {
-            console.log('token');
+            // console.log('token');
             res.json(true);
         });
 
-    } else if (!id && req.body.userName && req.body.password) {
+    } else if (!id && req.body.userName) {
 
-        const user = User.findOne({ loginId: req.body.userName, password: req.body.password })
-            .then(user => {
-                if (user?._id) {
-                    console.log(user.id);
-                    const token = jwt.sign(
-                        { user: { _id: user._id } },
-                        ash,
-                    );
-                    console.log('pas token');
-                    res.json({ token });
-                    console.log(token);
-                }
-            });
+        const user = User.findOne({ loginId: req.body.userName }).then(user => {
+            if (user) {
+                const password = user.password; // Récupération du mot de passe de l'objet
+                const hash = argon2.hash(req.body.password).then(hash => {
+                    // Comparaison du mot de passe fourni avec celui récupéré
+                    if (argon2.verify(password, hash)) {
+                        const token = jwt.sign(
+                            { user: { _id: user._id } },
+                            ash,
+                        );
+                        res.json({ token });
+                    }
+                });
+            }
+        });
+
     }
 
 });
@@ -45,24 +49,3 @@ router.post('/', (req, res) => {
 
 
 module.exports = router;
-// const express = require('express');
-// const router = express.Router();
-// const cors = require('cors');
-// const User = require('../model/user');
-
-// router.use(cors());
-// router.use(express.json());
-
-
-// router.post('/', (req, res) => {
-//     const user = new User({
-//         loginId: req.body.loginId,
-//         password: req.body.password
-//     });
-//     user.save()
-//         .then(() => res.status(201).json({ message: 'User created !' }))
-//         .catch(error => res.status(400).json({ error }));
-// });
-
-
-// module.exports = router;

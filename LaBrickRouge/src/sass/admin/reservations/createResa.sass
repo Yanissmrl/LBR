@@ -38,6 +38,8 @@
                     font-weight: 500
             &_label
         &_hourSelectGroup
+
+            user-select: none
             // border: 1px solid red
             display: flex
             flex-direction: column
@@ -63,6 +65,7 @@
                     max-width: 60%
                     // border: 1px solid blue
                     &_hourButton
+                        user-select: none
                         font-family: 'nunito', sans-serif
                         font-weight: 600
                         cursor: pointer
@@ -85,6 +88,7 @@
                 background-color: $gray
                 width: fit-content
                 padding: 3px
+                user-select: none
                 cursor: pointer
                 &:hover
                     // transition-delay: 0.07s
@@ -93,6 +97,7 @@
 
             &_hourVue
         &_validButton
+            user-select: none
 .active
     font-family: 'baloo 2', sans-serif
     cursor: pointer
