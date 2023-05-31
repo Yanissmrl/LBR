@@ -1,10 +1,15 @@
 .adminNav
     font-family: 'nunito', sans-serif
     &__ul
+        @media screen and ( max-width: 992px )
+            display: flex
+            flex-direction: column
+            align-items: center
         &_links
             padding-top: 1.5rem
             &_button
-                font-size: 1.5rem
+                // font-size: 1.5rem
+                font-size: 1.2rem
                 font-weight: 700
                 cursor: pointer
                 &:hover

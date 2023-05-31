@@ -10,9 +10,10 @@
         font-weight: 500
         text-transform: uppercase
     &__grid
-        display: grid
-        grid-template-columns: repeat(4, 1fr)
-        gap: 2rem
+        @media screen and (min-width: 992px)
+            display: grid
+            grid-template-columns: repeat(4, 1fr)
+            gap: 2rem
         &_all
             font-family: 'baloo 2', sans-serif
             &_day
@@ -23,6 +24,8 @@
                 &:first-letter
                     text-transform: uppercase
             &_card
+                // text-align: center
+                margin-bottom: 1.5rem
                 padding: 1rem
                 border-radius: 5px
                 background-color: $light-gray

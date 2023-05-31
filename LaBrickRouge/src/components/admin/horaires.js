@@ -228,7 +228,20 @@ export default function Horaires() {
 
     }
 
+    // const [screenSize, setScreenSize] = useState(window.innerWidth);
 
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setScreenSize(window.innerWidth);
+    //     };
+
+    //     window.addEventListener('resize', handleResize);
+
+    //     // Nettoyage de l'écouteur d'événement lors du démontage du composant
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
 
 
     return (
@@ -247,16 +260,19 @@ export default function Horaires() {
                                 </div>
                             )}
                         </div>
-
-                        <div className="createResa__form_input">
-                            <input className="createResa__form_input_numberInput" onChange={handleChange1} value={value1} ref={firstPlacesRef} placeholder="0" type="number" />
-                            <label className="createResa__form_input_label">Places pour premier service</label>
+                        <div className="createResa__form_placesGroup">
+                            <h3 className="createResa__form_placesGroup_title">Sélectionner les places pour le premier et deuxième service : </h3>
+                            <div className="createResa__form_placesGroup_inputGroup">
+                                <div className="createResa__form_placesGroup_inputGroup_input">
+                                    <label className="createResa__form_placesGroup_inputGroup_input_label">Premier</label>
+                                    <input className="createResa__form_placesGroup_inputGroup_input_numberInput" onChange={handleChange1} value={value1} ref={firstPlacesRef} placeholder="0" type="number" />
+                                </div>
+                                <div className="createResa__form_placesGroup_inputGroup_input">
+                                    <label className="createResa__form_placesGroup_inputGroup_input_label">Deuxième</label>
+                                    <input className="createResa__form_placesGroup_inputGroup_input_numberInput" onChange={handleChange2} value={value2} ref={secondPlacesRef} placeholder="0" type="number" />
+                                </div>
+                            </div>
                         </div>
-                        <div className="createResa__form_input">
-                            <input className="createResa__form_input_numberInput" onChange={handleChange2} value={value2} ref={secondPlacesRef} placeholder="0" type="number" />
-                            <label className="createResa__form_input_label">Places pour deuxième service</label>
-                        </div>
-
                         <div className="createResa__form_hourSelectGroup">
 
 
@@ -304,21 +320,25 @@ export default function Horaires() {
 
                         </div>
                         <div className="createResa__form_hourSelect">
-                            <select className="createResa__form_hourSelect_select" value={heure} onChange={(e) => setHeure(e.target.value)}>
-                                {heures.map((h) => (
-                                    <option className="createResa__form_hourSelect_select_option" key={h} value={h}>
-                                        {h}
-                                    </option>
-                                ))}
-                            </select>
-                            <select className="createResa__form_hourSelect_select" value={minute} onChange={(e) => setMinute(e.target.value)}>
-                                {minutes.map((m) => (
-                                    <option className="createResa__form_hourSelect_select_option" key={m} value={m}>
-                                        {m}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="createResa__form_hourSelect_hourVue">{heureMinute}</div>
+                            <div className="createResa__form_hourSelect_content">
+                                <div className="createResa__form_hourSelect_content_group">
+                                    <select className="createResa__form_hourSelect_content_group_select" value={heure} onChange={(e) => setHeure(e.target.value)}>
+                                        {heures.map((h) => (
+                                            <option className="createResa__form_hourSelect_content_group_select_option" key={h} value={h}>
+                                                {h}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select className="createResa__form_hourSelect_content_group_select" value={minute} onChange={(e) => setMinute(e.target.value)}>
+                                        {minutes.map((m) => (
+                                            <option className="createResa__form_hourSelect_content_group_select_option" key={m} value={m}>
+                                                {m}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="createResa__form_hourSelect_hourVue">{heureMinute}</div>
+                            </div>
                             <p className="createResa__form_hourSelect_button" onClick={handleValider}>Valider la selection</p>
                         </div>
 
