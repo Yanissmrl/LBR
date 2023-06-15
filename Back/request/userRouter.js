@@ -11,16 +11,13 @@ router.use(cors());
 router.use(express.json());
 
 // Route de connexion de l'administrateur
-const ash = 'Yaniss12341';
-
+const ash = '$argon2i$v=19$m=16,t=2,p=1$MzZ4REpxY3puOUtDcXI1QQ$h/10mOSER8digwhHDEdn9g';
 router.post('/', (req, res) => {
-    // console.log(req.body.userName, req.body.password);
     const id = jwt.decode(req.body.token, ash)?.user?._id;
 
     if (id) {
 
         const user = User.findOne({ _id: id }).then(user => {
-            // console.log('token');
             res.json(true);
         });
 

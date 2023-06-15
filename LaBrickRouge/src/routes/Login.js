@@ -20,13 +20,9 @@ export default function Login() {
         e.preventDefault();
         const loginId = idRef?.current?.value.replace(/[^\w\s]/g, '');
         const password = passwordRef?.current?.value.replace(/[^\w@.]/g, '');
-        // console.log("loginId", loginId);
-        // console.log("pass", password);
-
         apiContext.postUser(loginId, password, null).then(data => {
             console.log("data", data);
             if (data) {
-                // console.log("data mess", data.message);
                 appContext.setUser(true);
                 navigate('/admin');
             }
