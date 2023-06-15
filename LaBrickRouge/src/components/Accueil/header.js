@@ -1,6 +1,7 @@
 import insta from '../../assets/instagram.svg';
 import facebook from '../../assets/facebook.svg';
 import tripad from '../../assets/tripadvisor.svg';
+import Bobun from '../../assets/bobun.jpg';
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { APIContext } from "../../context/APIcall";
@@ -38,7 +39,8 @@ export default function HeaderAccueil() {
                     </div>
 
                     {/* <div style={{ backgroundImage: `url("${root}${image}")` }} className="header__allcontent_right"></div> */}
-                    <div style={{ backgroundImage: ` url(${root}${image})` }} className="header__allcontent_right"></div>
+                    <img className="header__allcontent_right" src={Bobun} alt="image d'un plats" />
+                    {/* <div style={{ backgroundImage: ` url(${root}${image})` }} className="header__allcontent_right"></div> */}
 
                     {/* <div className="header__allcontent_right"><img src={`${root}${image}`} alt={`${root}${image}`} /></div> */}
                     {/* <div style={{ backgroundImage: `url("${image2}")` }} className="header__allcontent_right"></div> */}

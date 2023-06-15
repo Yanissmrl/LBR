@@ -14,12 +14,32 @@
         display: flex
         align-items: center
         justify-content: space-between
+        &_menuIcon
+            @media screen and (min-width: 768px)
+                display: none
         &_logo
             height: 4rem
             @media screen and (min-width: 992px)
                 height: 5rem
+        &_navOpenBackGround
+            top: 110px
+            position: absolute
+            background-color: $light-gray
+            border-radius: 5px
+            right: 0
+            padding: 0.5rem
+            @media screen and ( min-width: 992px )
+                margin-left: 5rem
         &_ul
-            margin-left: 5rem
+
+            &_container
+                display: none
+
+            &_isNavOpen
+                display: flex
+                flex-direction: column
+                align-items: flex-end
+
             &_link
                 color: #000
                 font-weight: 550
